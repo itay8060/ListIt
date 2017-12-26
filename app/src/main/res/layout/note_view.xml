@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/note_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@drawable/notebackground"
+    android:padding="@dimen/itemviews_spacing"
+    android:layout_marginBottom="@dimen/itemviews_spacing"
+    android:elevation="3dp"
+    android:gravity="center_vertical">
+
+    <TextView
+        android:id="@+id/note_TxtView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_marginLeft="@dimen/editactivity_text_leftmargin"
+        android:textColor="#000000"/>
+
+</RelativeLayout>

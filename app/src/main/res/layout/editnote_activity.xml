@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="130dp"
+    android:background="@drawable/notebackground"
+    android:layout_centerInParent="true"
+    android:elevation="4dp">
+
+    <Button
+        android:id="@+id/editnoteactivity_closebtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/ic_close_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/editactivity_button_margin"
+        android:layout_marginRight="@dimen/editactivity_button_margin"/>
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_above="@+id/editnoteactivity_confirmbtn"
+        android:layout_alignEnd="@+id/editnoteactivity_closebtn">
+
+    <EditText
+        android:id="@+id/editnoteactivity_edittext"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:textColor="#000000"
+        android:textSize="15dp"
+        android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/editnoteactivity_confirmbtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/ic_check_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/editactivity_button_margin"
+        android:layout_marginRight="@dimen/editactivity_button_margin"
+        android:onClick="acceptNote"/>
+
+    <Button
+        android:id="@+id/editnoteactivity_deletebtn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/ic_delete_black_24dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/editactivity_button_margin"
+        android:layout_marginLeft="@dimen/editactivity_button_margin"
+        android:onClick="deleteNote"/>
+
+</RelativeLayout>

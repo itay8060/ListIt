@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#5fb0c9"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
+
+    <TextView
+        android:id="@+id/mainactivity_welcomelabel"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mainpage_welcomelabel"
+        android:layout_marginLeft="@dimen/mainactivity_leftmargin"
+        android:layout_marginTop="@dimen/mainactivity_label_topmargin"
+        android:textColor="#fff"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/mainactivity_list_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mainpage_defaultlist"
+        android:layout_below="@+id/mainactivity_welcomelabel"
+        android:layout_marginTop="@dimen/mainactivity_listname_topmargin"
+        android:layout_marginLeft="@dimen/mainactivity_leftmargin"
+        android:textColor="#fff"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:id="@+id/mainactivity_addproduct_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainactivity_list_name"
+        android:layout_marginTop="@dimen/editactivity_addnotelayout_topmargin">
+
+    <EditText
+        android:id="@+id/newProduct_editText"
+        android:layout_width="@dimen/mainactivity_edittext_width"
+        android:layout_height="wrap_content"
+        android:hint="Enter new product"
+
+        android:textColor="#fff"
+        android:drawableTint="#006fff"
+        android:layout_marginLeft="@dimen/mainactivity_edittext_leftmargin"
+        android:textColorHint="#fff"
+        android:maxLines="1"
+        android:inputType="text"/>
+
+    <Button
+        android:id="@+id/newProductBtn"
+        android:layout_width="@dimen/activity_addbtn_width"
+        android:layout_height="@dimen/activity_addbtn_hieght"
+        android:layout_toRightOf="@id/newProduct_editText"
+        android:background="@drawable/ic_add_circle_24dp"
+        android:layout_marginLeft="@dimen/mainactivity_leftmargin"
+        android:onClick="addProduct"
+        android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="280dp"
+        android:layout_below="@+id/mainactivity_addproduct_layout"
+        android:layout_margin="@dimen/mainactivity_margin"
+        android:background="#fff"
+        android:elevation="8dp">
+
+    <ListView
+        android:id="@+id/productList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="8dp"
+        android:layout_centerHorizontal="true"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="6.0sp"
+        android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/clearCheckedBtn"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="Delete checked"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:onClick="clearBtn"
+        android:textAllCaps="false"
+        android:layout_marginBottom="@dimen/mainactivity_bottommargin"
+        android:background="#d67601"
+        android:textColor="#fff"
+        android:textSize="18sp"/>
+
+</RelativeLayout>

@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">ListIt</string>
+
+    <!-- Pages headers labels -->
+    <string name="mainpage_welcomelabel">Welcome</string>
+    <string name="mainpage_defaultlist">My Default List :</string>
+    <string name="login_label">Account Login</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="drawer_item_list_ac">My List</string>
+    <string name="drawer_item_settings">Settings</string>
+    <string name="drawer_item_contact">Contact Us</string>
+    <string name="contact_subject">New message from ListIt app</string>
+    <string name="no_email_clients">There is no email client installed.</string>
+    <string name="select_email_message">Please select an mail app</string>
+
+</resources>
