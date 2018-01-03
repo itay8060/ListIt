@@ -22,7 +22,7 @@
     <dimen name="editactivity_backgroungmargin">3dp</dimen>
     <dimen name="editactivity_leftmargin">16dp</dimen>
     <dimen name="editactivity_addnotelayout_topmargin">5dp</dimen>
-    <dimen name="editactivity_picture_topmargin">8dp</dimen>
+    <dimen name="editactivity_picture_topmargin">5dp</dimen>
     <dimen name="editactivity_text_leftmargin">5dp</dimen>
     <dimen name="editactivity_button_margin">14dp</dimen>
     <dimen name="editactivity_addpicturesicons_spacing">6dp</dimen>

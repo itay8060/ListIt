@@ -3,7 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#5fb0c9"
-    android:scrollbarAlwaysDrawVerticalTrack="true">
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        style="@style/ToolBarStyle"
+        android:theme="@style/ToolBarStyle"
+        android:background="@color/colorPrimary"
+        />
 
     <TextView
         android:id="@+id/mainactivity_welcomelabel"
@@ -63,21 +74,30 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="280dp"
+        android:layout_height="340dp"
         android:layout_below="@+id/mainactivity_addproduct_layout"
         android:layout_margin="@dimen/mainactivity_margin"
-        android:background="#fff"
         android:elevation="8dp">
 
-    <ListView
-        android:id="@+id/productList"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/productsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/sublist_view"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentEnd="true"
+            android:divider="@color/grey"
+            android:dividerHeight="1px"/>
+
+    <!--<ListView
+        android:id="@+id/productsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="8dp"
         android:layout_centerHorizontal="true"
         android:divider="@android:color/transparent"
         android:dividerHeight="6.0sp"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true" />-->
 
     </RelativeLayout>
 

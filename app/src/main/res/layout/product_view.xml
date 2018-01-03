@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/productview_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
@@ -10,20 +10,44 @@
     android:clickable="true"
     android:padding="@dimen/itemviews_spacing">
 
+    <RelativeLayout
+        android:id="@+id/checkbox_layout"
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
     <CheckBox
         android:id="@+id/done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="8dp"/>
 
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/productName_layout"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/checkbox_layout"
+        android:layout_centerVertical="true"
+        android:clickable="true">
+
     <TextView
         android:id="@+id/productName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="8dp"
         android:clickable="false"
-        android:layout_toRightOf="@id/done"
         android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/quantity_layout"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/productName_layout">
 
     <ImageButton
         android:id="@+id/subQuantityBtn"
@@ -45,7 +69,7 @@
         android:layout_marginLeft="@dimen/itemviews_spacing"
         android:layout_marginRight="@dimen/itemviews_spacing"
         android:layout_alignBottom="@+id/subQuantityBtn"
-        android:layout_toStartOf="@+id/addQuantityBtn"
+        android:layout_toLeftOf="@+id/addQuantityBtn"
         android:layout_centerVertical="true"/>
 
     <ImageButton
@@ -57,4 +81,6 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/itemviews_spacing"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="310dp"
-    android:layout_height="360dp"
+    android:layout_height="400dp"
     android:background="#4FB6D5"
     android:layout_centerInParent="true"
     android:elevation="4dp"
@@ -159,7 +159,8 @@
             android:id="@+id/editactivity_addnote_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/editactivity_addnotelayout_topmargin">
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
             <EditText
                 android:id="@+id/editactivity_note_edittext"
@@ -167,21 +168,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/mainactivity_leftmargin"
                 android:hint="Enter note"
+                android:inputType="text"
+                android:maxLines="2"
                 android:textColor="#fff"
                 android:textColorHint="#fff"
-                android:maxLines="2"
-                android:inputType="text"
-                android:textSize="15dp"/>
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/editactivity_addbtn"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/ic_add_circle_24dp"
-                android:layout_toRightOf="@id/editactivity_note_edittext"
-                android:layout_margin="@dimen/activity_margin"
                 android:layout_centerVertical="true"
-                android:onClick="addNote"/>
+                android:layout_margin="@dimen/activity_margin"
+                android:layout_toRightOf="@id/editactivity_note_edittext"
+                android:background="@drawable/ic_add_circle_24dp"
+                android:onClick="addNote" />
 
         </RelativeLayout>
 

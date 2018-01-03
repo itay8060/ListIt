@@ -16,10 +16,6 @@ import com.appit.listit.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by איתי פלדמן on 16/12/2017.
- */
-
 public class NoteEditActivity extends AppCompatActivity {
 
     @BindView(R.id.editnoteactivity_edittext)
@@ -95,4 +91,4 @@ public class NoteEditActivity extends AppCompatActivity {
         finish();
     }
 
-}
+    }

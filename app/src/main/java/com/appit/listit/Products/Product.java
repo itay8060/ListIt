@@ -10,17 +10,18 @@ public class Product extends SugarRecord {
     private int quantity;
     //private Bitmap productImage;
     private long listId;
+    private long categoryId;
 
     public Product(){
-
     }
 
-    public Product(String productName, long listId){
+    public Product(String productName, long listId, long categoryId){
         this.productName = productName;
         this.listId = listId;
         this.quantity = 1;
         this.productDone = false;
         //this.productImage = null;
+        this.categoryId = categoryId;
     }
 
     public void setProductOnlineId(long productOnlineId){
@@ -76,6 +77,10 @@ public class Product extends SugarRecord {
 
     public long getListId(){
         return this.listId;
+    }
+
+    public long getCategorytId(){
+        return this.categoryId;
     }
 
 }
