@@ -3,31 +3,31 @@ package com.appit.listit.Notes;
 import com.orm.SugarRecord;
 
 /**
- * Created by איתי פלדמן on 13/12/2017.
+ * Created by אitay feldman on 13/12/2017.
  */
 
 public class Note extends SugarRecord {
 
-    private long noteOnlineId;
+    private String noteOnlineId;
     private String noteTxt;
     private String userName;
-    private long productId;
+    private String productId;
 
     public Note(){
     }
 
-    public Note(String noteTxt, String userName, long productId){
-        this.noteOnlineId = 0;
+    public Note(String noteTxt, String userName, String productId){
         this.noteTxt = noteTxt;
         this.userName = userName;
         this.productId = productId;
     }
 
-    public void setNoteOnlineId(long noteOnlineId){
+    public void setNoteOnlineId(String noteOnlineId){
         this.noteOnlineId = noteOnlineId;
+        this.save();
     }
 
-    public long getNoteOnlineId(){
+    public String getNoteOnlineId(){
         return this.noteOnlineId;
     }
 
@@ -40,7 +40,7 @@ public class Note extends SugarRecord {
         return this.noteTxt;
     }
 
-    public void setUseId(String userName){
+    public void setUserName(String userName){
         this.userName = userName;
     }
 
@@ -48,11 +48,12 @@ public class Note extends SugarRecord {
         return this.userName;
     }
 
-    public void setProductId(long productId){
+    public void setProductId(String productId){
         this.productId = productId;
+        this.save();
     }
 
-    public long getProductId(){
+    public String getProductId(){
         return this.productId;
     }
 }

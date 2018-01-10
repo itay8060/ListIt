@@ -1,7 +1,7 @@
 package com.appit.listit.Lists;
 
 /**
- * Created by איתי פלדמן on 26/12/2017.
+ * Created by itay feldman on 26/12/2017.
  */
 
 public class AllLists {

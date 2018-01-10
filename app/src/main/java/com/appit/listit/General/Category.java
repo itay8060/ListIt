@@ -3,11 +3,13 @@ package com.appit.listit.General;
 import com.orm.SugarRecord;
 
 /**
- * Created by איתי פלדמן on 03/01/2018.
+ * Created by itay feldman on 03/01/2018.
  */
 
 public class Category extends SugarRecord{
 
+
+    private String categoryOnlineId;
     private String categoryName;
 
     public Category(){
@@ -16,6 +18,16 @@ public class Category extends SugarRecord{
 
     public Category(String categoryName){
         this.categoryName = categoryName;
+    }
+
+    public void setCategoryOnlineId(String categoryOnlineId) {
+        this.categoryOnlineId = categoryOnlineId;
+        this.save();
+    }
+
+
+    public String getCategoryOnlineId() {
+        return categoryOnlineId;
     }
 
     public String getCategoryName(){

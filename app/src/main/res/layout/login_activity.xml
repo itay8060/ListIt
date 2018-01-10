@@ -5,17 +5,27 @@
     android:background="#5fb0c9"
     android:scrollbarAlwaysDrawVerticalTrack="true">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        style="@style/ToolBarStyle"
+        android:theme="@style/ToolBarStyle"
+        android:background="@color/colorPrimary"/>
+
     <TextView
         android:id="@+id/login_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginBottom="@dimen/activity_margin"
+        android:layout_marginTop="@dimen/activity_label_topmargin"
         android:gravity="center_horizontal"
         android:text="Account Login"
         android:textColor="#fff"
         android:textSize="26sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_below="@id/toolbar"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -37,13 +47,14 @@
 
 
                 <EditText
-                    android:id="@+id/login_userName"
+                    android:id="@+id/login_userEmail"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:drawableTint="#006fff"
                     android:singleLine="true"
-                    android:hint="User Name"
+                    android:hint="Email"
+                    android:textColor="#3EB8C5"
                     android:layout_marginTop="17dp"
                     android:inputType="textEmailAddress" />
 
@@ -54,29 +65,46 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:singleLine="true"
+                    android:textColor="#3EB8C5"
                     android:drawableLeft="@drawable/ic_lock_black_24dp"
                     android:drawableTint="#006fff"
                     android:hint="Password"
-                    android:inputType="numberPassword" />
+                    android:inputType="textPassword" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:paddingTop="5dp"
-                android:text="Forgot Password?" />
+                android:text="Forgot Password?"/>
 
 
             <Button
                 android:id="@+id/signin_btn"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="22dp"
-                android:background="#d67601"
+                android:layout_width="@dimen/loginactivity_loginBtn_width"
+                android:layout_height="@dimen/loginactivity_loginBtn_hieght"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="#3EB8C5"
                 android:text="Sign in"
                 android:textAllCaps="false"
                 android:textColor="#fff"
-                android:textSize="18sp" />
+                android:textSize="20sp"/>
+
+            <TextView
+                android:text="Register"
+                android:layout_width="@dimen/loginactivity_registerBtn_width"
+                android:layout_height="@dimen/loginactivity_registerBtn_hieght"
+                android:id="@+id/register_Btn"
+                android:onClick="cancel"
+                android:background="#fff"
+                android:layout_marginTop="@dimen/loginactivity_signupBtn_topmargin"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#00AEEF"
+                android:textSize="18dp"
+                android:gravity="center"
+                android:clickable="true"/>
         </LinearLayout>
     </RelativeLayout>
 

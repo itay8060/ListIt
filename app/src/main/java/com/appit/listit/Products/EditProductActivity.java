@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appit.listit.DBPackage.ObjectsManager;
+import com.appit.listit.FireBasePackage.FireBaseDataManager;
 import com.appit.listit.General.AppConstants;
 import com.appit.listit.Notes.Note;
 import com.appit.listit.Notes.NoteAdapter;
@@ -38,7 +41,7 @@ import butterknife.ButterKnife;
 import static com.orm.SugarRecord.findWithQuery;
 
 /**
- * Created by איתי פלדמן on 13/12/2017.
+ * Created by itay feldman on 13/12/2017.
  */
 
 public class EditProductActivity extends AppCompatActivity {
@@ -55,11 +58,13 @@ public class EditProductActivity extends AppCompatActivity {
     EditText editactivityNoteEdittext;
     @BindView(R.id.editactivity_note_listview)
     ListView editactivityNoteListview;
+    @BindView(R.id.editactivity_categoryBtn)
+    Button editactivityCategoryBtn;
+    ListView dialoglist;
     private List<Note> notesList;
-    private NoteAdapter adapter;
     Product product;
     ItemClickListener clickListener;
-    private long id;
+    private String productId;
     private Dialog dialog;
 
     @Override
@@ -69,21 +74,30 @@ public class EditProductActivity extends AppCompatActivity {
         setContentView(R.layout.editproduct_activity);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        id = intent.getLongExtra("productId", 0);
-        notesList = findWithQuery(Note.class, "Select * from Note where product_id = ?", String.valueOf(id));
-        adapter = new NoteAdapter(notesList, this, clickListener);
-        editactivityNoteListview.setAdapter(adapter);
-        product = Product.findById(Product.class, id);
-        dialog = new Dialog(this);
+        productId = intent.getStringExtra("productId");
+
         /*if (product.getProductImage()!=null){
             editactivityPictureImageview.setImageBitmap(product.getProductImage());
         }*/
+        activityInits();
+    }
 
-        //runDemos();
+    private void activityInits() {
+        firstInitiation();
         refreshNotes();
-        //loadNotesData();
-        //initClickListeners();
+        createDialog();
+        initClickListeners();
+    }
 
+    private void firstInitiation() {
+        java.util.List<Product> productsListTemp = new ArrayList();
+        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", productId);
+        product = productsListTemp.get(0);
+        String categoryName = ObjectsManager.getCategoryNameById(product.getCategorytId());
+        editactivityCategoryBtn.setText("Category : " + categoryName);
+    }
+
+    private void initClickListeners() {
         editactivityNoteListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -91,13 +105,22 @@ public class EditProductActivity extends AppCompatActivity {
             }
         });
 
-        editactivityClosebtn.setOnClickListener(new View.OnClickListener() {
+        editactivityCategoryBtn.setOnClickListener(new Button.OnClickListener() {
+
             @Override
-            public void onClick(View v) {
-                closeEditProduct();
+            public void onClick(View arg0) {
+                dialog.show();
             }
         });
 
+        editactivityClosebtn.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick (View v){
+                closeEditProduct();
+            }
+        });
     }
 
     private void checkPermissions() {
@@ -143,57 +166,56 @@ public class EditProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v, int src, int i) {
                 Integer location;
-                switch (src){
+                switch (src) {
                     case AppConstants.EDIT_NOTE_CONST:
                         openEditNoteActivity(i);
-                    break;
+                        break;
                 }
             }
         };
     }
 
+    //region Notes
+
     private void openEditNoteActivity(int i) {
         Intent intent = new Intent(EditProductActivity.this, NoteEditActivity.class);
-        intent.putExtra("myNote", notesList.get(i).getId());
-        startActivityForResult(intent,AppConstants.NOTE);
-    }
-
-    private void saveNotesData() {
-        //need DB first
-        editactivityNoteListview.setAdapter(new NoteAdapter(this.notesList, this, clickListener));
-    }
-
-    private void loadNotesData() {
-        //need DB first
-
-        editactivityNoteListview.setAdapter(new NoteAdapter(this.notesList, this, clickListener));
+        intent.putExtra("myNote", notesList.get(i).getNoteOnlineId());
+        startActivityForResult(intent, AppConstants.NOTE);
     }
 
     private void refreshNotes() {
-        notesList = Note.findWithQuery(Note.class, "Select * from Note where product_id = ?", String.valueOf(id));
+        notesList = Note.findWithQuery(Note.class, "Select * from Note where product_id = ?", productId);
         editactivityNoteListview.setAdapter(new NoteAdapter(this.notesList, this, clickListener));
     }
 
     public void addNote(View v) {
-        com.appit.listit.Lists.List tempList = com.appit.listit.Lists.List.findById(com.appit.listit.Lists.List.class, product.getListId());
-        Note note = new Note(editactivityNoteEdittext.getText().toString(), tempList.getUserName(), product.getId());
+        java.util.List<com.appit.listit.Lists.List> listsListTemp = new ArrayList();
+        listsListTemp = findWithQuery(com.appit.listit.Lists.List.class, "Select * from List where list_online_id = ?",product.getListId() );
+        com.appit.listit.Lists.List tempList = listsListTemp.get(0);
+        Note note = new Note(editactivityNoteEdittext.getText().toString(), tempList.getUserId(), product.getProductOnlineId());
         note.save();
+        FireBaseDataManager.addFireBaseNote(note, productId);
         editactivityNoteEdittext.setText("");
-        //saveNotesData();
         refreshNotes();
     }
 
-    public void closeEditProduct(){
+    //endregion Notes
+
+    public void closeEditProduct() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
     }
 
-    public void fromGallery(View v){
+    //region Image funcs
+
+    public void fromGallery(View v) {
         checkPermissions();
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, AppConstants.GALLERY);
     }
 
-    public void fromCamera(View v){
+    public void fromCamera(View v) {
         checkPermissions();
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i, AppConstants.CAMERA);
@@ -202,31 +224,68 @@ public class EditProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent i) {
         super.onActivityResult(requestCode, resultCode, i);
-        if(resultCode==RESULT_OK){
-            switch(requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case AppConstants.GALLERY:
                     editactivityPictureImageview.setImageURI(i.getData());
                     break;
                 case AppConstants.CAMERA:
                     Bitmap bm;
-                    bm = (Bitmap)i.getExtras().get("data");
+                    bm = (Bitmap) i.getExtras().get("data");
                     editactivityPictureImageview.setImageBitmap(bm);
                     break;
                 case AppConstants.NOTE:
                     refreshNotes();
-                    Log.e("f","Refreshed");
+                    Log.e("f", "Refreshed");
                     Toast.makeText(this, "Note updated", Toast.LENGTH_LONG);
                     break;
             }
         }
         if (resultCode == Activity.RESULT_CANCELED) {
-            Log.e("f","Canceled");
+            Log.e("f", "Canceled");
             Toast.makeText(this, "No changes were made", Toast.LENGTH_LONG);
         }
         if (resultCode == AppConstants.RESULT_DELETED) {
             refreshNotes();
-            Log.e("f","Deleted");
+            Log.e("f", "Deleted");
             Toast.makeText(this, "Note deleted", Toast.LENGTH_LONG);
         }
     }
+    //endregion Image funcs
+
+    //region Dialog funcs
+
+    protected void createDialog() {
+        dialog = new Dialog(this);
+        dialog = new Dialog(EditProductActivity.this);
+        dialog.setContentView(R.layout.category_dialoglayout);
+        dialog.setTitle("Choose category");
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+
+            //Prepare ListView in dialog
+            dialoglist = (ListView)dialog.findViewById(R.id.dialoglist);
+            ArrayList<String> listContent = ObjectsManager.getCategoryAsStrings();
+            ArrayAdapter<String> adapter
+                    = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, listContent);
+            dialoglist.setAdapter(adapter);
+            dialoglist.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view,
+                                        int position, long id) {
+                    Toast.makeText(EditProductActivity.this,
+                            parent.getItemAtPosition(position).toString() + " clicked",
+                            Toast.LENGTH_LONG).show();
+                    ObjectsManager.setNewCategoryToProduct(productId, parent.getItemAtPosition(position).toString());
+                    editactivityCategoryBtn.setText("Category : " + parent.getItemAtPosition(position).toString());
+                    dialog.cancel();
+                }});
+    //return dialog;
+    }
+
+    //endregion Dialog funcs
+
 }
+

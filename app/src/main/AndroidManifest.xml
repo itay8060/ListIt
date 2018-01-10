@@ -11,23 +11,23 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">/>
-        <meta-data android:name="VERSION" android:value="4" />
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">/>
+        <meta-data android:name="VERSION" android:value="6" />
         <meta-data android:name="QUERY_LOG" android:value="true" />
         <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.appit" />
 
-        <activity android:name="com.appit.listit.Login.LoginActivity">
+        <activity android:name="com.appit.listit.LoginAndRegister.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity android:name="com.appit.listit.GroceryList.MainActivity"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            android:windowSoftInputMode="adjustNothing">
-            </activity>
+            android:windowSoftInputMode="adjustNothing"/>
+
+        <activity android:name=".LoginAndRegister.RegisterActivity"/>
+
 
         <activity android:theme="@style/Theme.AppCompat.Dialog"
             android:name="com.appit.listit.Products.EditProductActivity" />

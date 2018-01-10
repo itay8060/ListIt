@@ -15,6 +15,10 @@ import com.appit.listit.Products.ItemClickListener;
 import com.appit.listit.Products.Product;
 import com.appit.listit.R;
 
+/**
+ * Created by אitay feldman on 31/12/2017.
+ */
+
 public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListHolder> {
 
     private java.util.List<SubList> subListsList;
@@ -22,7 +26,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
     private ItemClickListener clickListener;
     private Context context;
 
-    public SubListAdapter (java.util.List<SubList> subListsList, java.util.List<Product> productsList, ItemClickListener clickListener, Context context){
+    public SubListAdapter (java.util.List<SubList> subListsList, java.util.List<Product> productsList, ItemClickListener clickListener, Context context/*, OnStartDragListener mDragStartListener*/){
         this.subListsList = subListsList;
         this.productsList = productsList;
         this.clickListener = clickListener;
@@ -48,7 +52,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
 
         for (int i = 0; i < productsList.size(); i++)
         {
-            if (productsList.get(i).getCategorytId()==subListsList.get(position).getCategoryId()) {
+            if (productsList.get(i).getCategorytId().equals(String.valueOf(subListsList.get(position).getCategoryId()))) {
                 final int k = i;
 
                 View line = list.inflate(context, R.layout.product_view, null);
@@ -93,10 +97,6 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
 
                 list.addView(line);
             }else continue;
-            /*LayoutInflater factory = LayoutInflater.from(context);
-            View view = factory.inflate(R.layout.product_view, null);
-
-            linearLayout.addView(view);*/
         }
 
     }
@@ -142,9 +142,8 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
 
         public SubListHolder(View itemView) {
             super(itemView);
-            subListTitle = ((TextView)itemView.findViewById(R.id.subList_textView));
-            productsLayout = ((LinearLayout)itemView.findViewById(R.id.subList_products_layout));
-
+            subListTitle = ((TextView) itemView.findViewById(R.id.subList_textView));
+            productsLayout = ((LinearLayout) itemView.findViewById(R.id.subList_products_layout));
         }
     }
 }

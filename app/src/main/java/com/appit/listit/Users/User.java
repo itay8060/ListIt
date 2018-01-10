@@ -3,12 +3,12 @@ package com.appit.listit.Users;
 import com.orm.SugarRecord;
 
 /**
- * Created by איתי פלדמן on 11/12/2017.
+ * Created by itay feldman on 11/12/2017.
  */
 
 public class User extends SugarRecord {
 
-    private long userOnlineId;
+    private String userOnlineId;
     private String userName;
     private String userEmail;
     private String userPassword;
@@ -22,11 +22,11 @@ public class User extends SugarRecord {
         this.userPassword = userPassword;
     }
 
-    public void setUserOnlineId(long userOnlineId){
+    public void setUserOnlineId(String userOnlineId){
         this.userOnlineId = userOnlineId;
     }
 
-    public long getUserOnlineId(){
+    public String getUserOnlineId(){
         return this.userOnlineId;
     }
 

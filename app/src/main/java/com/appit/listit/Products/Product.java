@@ -2,20 +2,24 @@ package com.appit.listit.Products;
 
 import com.orm.SugarRecord;
 
+/**
+ * Created by אitay feldman on 08/12/2017.
+ */
+
 public class Product extends SugarRecord {
 
-    private long productOnlineId;
+    private String productOnlineId;
     private String productName;
     private boolean productDone;
     private int quantity;
     //private Bitmap productImage;
-    private long listId;
-    private long categoryId;
+    private String listId;
+    private String categoryId;
 
     public Product(){
     }
 
-    public Product(String productName, long listId, long categoryId){
+    public Product(String productName, String listId, String categoryId){
         this.productName = productName;
         this.listId = listId;
         this.quantity = 1;
@@ -24,11 +28,12 @@ public class Product extends SugarRecord {
         this.categoryId = categoryId;
     }
 
-    public void setProductOnlineId(long productOnlineId){
+    public void setProductOnlineId(String productOnlineId){
         this.productOnlineId = productOnlineId;
+        this.save();
     }
 
-    public long getProductOnlineId(){
+    public String getProductOnlineId(){
         return this.productOnlineId;
     }
 
@@ -71,16 +76,22 @@ public class Product extends SugarRecord {
         return this.productImage;
     }*/
 
-    public void setListId(long listId){
+    public void setListId(String listId){
         this.listId = listId;
+        this.save();
     }
 
-    public long getListId(){
+    public String getListId(){
         return this.listId;
     }
 
-    public long getCategorytId(){
+    public String getCategorytId(){
         return this.categoryId;
+    }
+
+    public void setCategoryId(String categoryId){
+        this.categoryId = categoryId;
+        this.save();
     }
 
 }

@@ -1,37 +1,38 @@
 package com.appit.listit.GroceryList;
 
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appit.listit.DBPackage.ObjectsManager;
+import com.appit.listit.FireBasePackage.FireBaseDataManager;
 import com.appit.listit.General.AppConstants;
 import com.appit.listit.General.Category;
-import com.appit.listit.Helpers.GravitySnapHelper;
 import com.appit.listit.Helpers.SubListArrayMaker;
 import com.appit.listit.Lists.List;
 import com.appit.listit.Lists.SubList;
 import com.appit.listit.Lists.SubListAdapter;
-import com.appit.listit.Notes.Note;
 import com.appit.listit.Products.EditProductActivity;
 import com.appit.listit.Products.ItemClickListener;
 import com.appit.listit.Products.Product;
 import com.appit.listit.R;
-import com.appit.listit.Users.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -49,10 +50,14 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.orm.SugarRecord.findWithQuery;
+
+/**
+ * Created by itay feldman on 03/12/2017.
+ */
+
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.mainactivity_welcomelabel)
-    TextView mainactivityWelcomelabel;
     @BindView(R.id.mainactivity_list_name)
     TextView mainactivityListName;
     @BindView(R.id.newProduct_editText)
@@ -63,26 +68,35 @@ public class MainActivity extends AppCompatActivity {
     Button clearCheckedBtn;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    //region Variables initiation
     private List list = new List();
     private java.util.List<SubList> subListList = new ArrayList<>();
     private java.util.List<Product> productsList = new ArrayList<>();
     private java.util.List<Category> categoriesList = new ArrayList<>();
+    private java.util.List<List> listsList = new ArrayList<>();
     private ItemClickListener clickListener;
-    private User currentUser;
     private Product currentProduct;
     private Drawer navDrawer;
     private SubListAdapter adapter;
-
-
+    private FirebaseAuth mAuth;
+    private DatabaseReference databaseProducts;
+    //endregion Variables initiation
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
-        Intent i = getIntent();
-        currentUser = User.findById(User.class, i.getLongExtra("UserId", 0));
+        mAuth = FirebaseAuth.getInstance();
         activityInits();
+        databaseProducts = FirebaseDatabase.getInstance().getReference("products").child(list.getListOnlineId());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshProducts();
     }
 
     private void activityInits() {
@@ -95,40 +109,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initLists() {
-        SnapHelper snapHelper = new GravitySnapHelper(Gravity.TOP);
+        /*SnapHelper snapHelper = new GravitySnapHelper(Gravity.TOP);
         pRecyclerView.setLayoutManager(new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false));
-        snapHelper.attachToRecyclerView(pRecyclerView);
-
-
+        snapHelper.attachToRecyclerView(pRecyclerView);*/
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         pRecyclerView.setLayoutManager(layoutManager);
-        categoriesList = Category.listAll(Category.class);
-        productsList = Product.listAll(Product.class);
+        Log.e("initlist user list id", list.getListOnlineId());
+        mainactivityListName.setText(list.getListName());
         subListList = SubListArrayMaker.createArray(productsList,categoriesList);
         adapter = new SubListAdapter(subListList, productsList, clickListener, this);
-        pRecyclerView.addItemDecoration(
-                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
+    //region Products Funcs
+
     public void addProduct(View v) {
-        Product product = new Product(newProductEditText.getText().toString(), list.getId(), categoriesList.get(0).getId());
+        if(newProductEditText.getText().toString().equals("")) {
+            Toast.makeText(this, "Enter product name", Toast.LENGTH_LONG).show();
+        }else {Product product = new Product(newProductEditText.getText().toString(), list.getListOnlineId(), categoriesList.get(0).getId().toString());
         product.save();
+        FireBaseDataManager.addFireBaseProduct(product, list.getListOnlineId());
         newProductEditText.setText("");
         refreshProducts();
+        }
     }
 
     private void refreshProducts() {
-        categoriesList = Category.listAll(Category.class);
-        productsList = Product.listAll(Product.class);
+        //categoriesList = Category.listAll(Category.class);
+        //productsList = Product.listAll(Product.class);
+        categoriesList = ObjectsManager.getCategoryList();
+        productsList = ObjectsManager.getProductsList(list.getListOnlineId());
         subListList = SubListArrayMaker.createArray(productsList,categoriesList);
         pRecyclerView.setAdapter(new SubListAdapter(subListList, productsList, clickListener, this));
     }
 
     public void clearBtn(View v) {
+        refreshProducts();
+        java.util.List<Product> productsListTemp = new ArrayList();
         for (int i = 0; i < productsList.size(); i++) {
             if (productsList.get(i).productIsDone()) {
-                Product product = Product.findById(Product.class, productsList.get(i).getId());
+                productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", productsList.get(i).getProductOnlineId());
+                Product product = productsListTemp.get(0);
                 productsList.remove(i);
                 product.delete();
                 i--;
@@ -138,98 +159,74 @@ public class MainActivity extends AppCompatActivity {
         //saveProductsData();
     }
 
-    public void initDemoData() {
+    public void showEditProductActivity(String id) {
+        Intent intent = new Intent(MainActivity.this, EditProductActivity.class);
+        intent.putExtra("productId", id);
+        startActivityForResult(intent, AppConstants.EDIT_CATEGORY);
+    }
 
-        if (categoriesList.size()!= 4){
-            Category.deleteAll(Category.class);
-            categoriesList = new ArrayList<Category>();
-            Category category1 = new Category("Others");
-            category1.save();
-            categoriesList.add(category1);
-            Category category2 = new Category("Meat");
-            category2.save();
-            categoriesList.add(category2);
-            Category category3 = new Category("Milk");
-            category3.save();
-            categoriesList.add(category3);
-            Category category4 = new Category("Fruits");
-            category4.save();
-            categoriesList.add(category4);
-        }
-        if (list.getListName() == null) {
-            List.deleteAll(List.class);
-            list.setListName("My Frist GroceryListsList");
-            list.setUserName(currentUser.getUserName());
-            list.save();
-        }
-        if (productsList.size() == 0) {
-            Product.deleteAll(Product.class);
-            productsList = new ArrayList<Product>();
-            Product product1 = new Product("Chicken breast", list.getId(), categoriesList.get(1).getId());
-            productsList.add(product1);
-            product1.save();
-            Product product2 = new Product("Ice cream", list.getId(), categoriesList.get(2).getId());
-            productsList.add(product2);
-            product2.save();
-            Product product3 = new Product("Oranges", list.getId(), categoriesList.get(3).getId());
-            productsList.add(product3);
-            product3.save();
-            Note.deleteAll(Note.class);
-            Note note1 = new Note("ERGENT!", currentUser.getUserName(), product2.getId());
-            note1.save();
-            Note note2 = new Note("We're all outt!", currentUser.getUserName(), product1.getId());
-            note2.save();
-            Note note3 = new Note("Anyone getting?!", currentUser.getUserName(), product1.getId());
-            note3.save();
-            refreshProducts();
-        }
-        refreshProducts();
+    public void initDemoData(){
+        categoriesList = Category.listAll(Category.class);
+        //Category.deleteAll(Category.class);
+        initCategoryDemos();
+
+        //List.deleteAll(List.class);
+        initListsDemos();
+
+        //Product.deleteAll(Product.class);
+        initProductsDemos();
+
+        //refreshProducts();
+    }
+
+    private void initProductsDemos() {
+        productsList = ObjectsManager.getProductsList(list.getListOnlineId());
+        Log.e("demo products list", productsList.toString());
+    }
+
+    private void initListsDemos() {
+        list = ObjectsManager.getUserList();
+    }
+
+    private void initCategoryDemos() {
+        categoriesList = ObjectsManager.getCategoryList();
+        Log.e("demo category list", categoriesList.toString());
     }
 
     public void initClickListeners() {
         clickListener = new ItemClickListener() {
             @Override
             public void onClick(View v, int src, int i) {
+                java.util.List<Product> productsListTemp = new ArrayList();
                 switch (src) {
                     case AppConstants.ADD_PRODUCT_QUANTITY:
-                        currentProduct = Product.findById(Product.class, productsList.get(i).getId());
+                        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", productsList.get(i).getProductOnlineId());
+                        currentProduct = productsListTemp.get(0);
                         currentProduct.increaseQuantity();
                         refreshProducts();
                         break;
                     case AppConstants.SUB_PRODUCT_QUANTITY:
-                        currentProduct = Product.findById(Product.class, productsList.get(i).getId());
+                        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", productsList.get(i).getProductOnlineId());
+                        currentProduct = productsListTemp.get(0);
                         currentProduct.decreaseQuantity();
                         refreshProducts();
                         break;
                     case AppConstants.EDIT_PRODUCT_CONST:
-                        showEditProductActivity(productsList.get(i).getId());
+                        showEditProductActivity(productsList.get(i).getProductOnlineId());
+                        refreshProducts();
                         break;
                     case AppConstants.CHECKBOX:
-                        currentProduct = Product.findById(Product.class, productsList.get(i).getId());
+                        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", productsList.get(i).getProductOnlineId());
+                        currentProduct = productsListTemp.get(0);
                         currentProduct.productToggleChecked();
-                        refreshProducts();
+                        currentProduct.save();
                         break;
                 }
             }
         };
     }
 
-    public void showEditProductActivity(Long id) {
-        Log.i("msg", "got inside");
-        Intent intent = new Intent(MainActivity.this, EditProductActivity.class);
-        intent.putExtra("productId", id);
-        startActivity(intent);
-    }
-
     //endregion Products Funcs
-
-    private void InitToolBar() {
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(list.getListName());
-        }
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
-    }
 
     //region Nav Drawer Func
     private void InitNavDrawer() {
@@ -239,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("MyLists").withIcon(GoogleMaterial.Icon.gmd_account_circle)
+                        new ProfileDrawerItem().withName(mAuth.getCurrentUser().getDisplayName()).withIcon(GoogleMaterial.Icon.gmd_account_circle)
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -274,7 +271,17 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
 
                 sendEmail();
+                return true;
+            }
+        });
 
+        SecondaryDrawerItem logoutDrawer = new SecondaryDrawerItem().withIdentifier(4).withName(R.string.drawer_item_signout)
+                .withIcon(GoogleMaterial.Icon.gmd_backspace);
+
+        logoutDrawer.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                CreateAlertDialog();
 
                 return true;
             }
@@ -288,7 +295,9 @@ public class MainActivity extends AppCompatActivity {
                         itemListAc,
                         new DividerDrawerItem(),
                         settingsDrawer,
-                        contactUsDrawer
+                        contactUsDrawer,
+                        new DividerDrawerItem(),
+                        logoutDrawer
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -307,6 +316,10 @@ public class MainActivity extends AppCompatActivity {
         navDrawer.closeDrawer();
     }
 
+    private void signOut(){
+        mAuth.signOut();
+        finish();
+    }
 
     private void sendEmail() {
 
@@ -327,5 +340,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     //endregion Nav Drawer Func
+
+    //region Alert Dialog Func
+    public void CreateAlertDialog() {
+        AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+
+        alertbox.setTitle("Sign Out");
+        alertbox.setMessage("Are you sure you want to sign out?");
+
+        alertbox.setNegativeButton("CANCEL",
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+            // will automatically dismiss the dialog and will do nothing
+                    }
+                });
+
+
+        alertbox.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        signOut();
+                    }
+                });
+        alertbox.show();
+    }
+    //endregion Alert Dialog Func
+
+    private void InitToolBar() {
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("ListIt");
+        }
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white));
+    }
+
 }
 

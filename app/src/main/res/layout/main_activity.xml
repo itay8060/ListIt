@@ -17,23 +17,11 @@
         />
 
     <TextView
-        android:id="@+id/mainactivity_welcomelabel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/mainpage_welcomelabel"
-        android:layout_marginLeft="@dimen/mainactivity_leftmargin"
-        android:layout_marginTop="@dimen/mainactivity_label_topmargin"
-        android:textColor="#fff"
-        android:textSize="26dp"
-        android:textStyle="bold"
-        android:gravity="center"/>
-
-    <TextView
         android:id="@+id/mainactivity_list_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/mainpage_defaultlist"
-        android:layout_below="@+id/mainactivity_welcomelabel"
+        android:layout_below="@+id/toolbar"
         android:layout_marginTop="@dimen/mainactivity_listname_topmargin"
         android:layout_marginLeft="@dimen/mainactivity_leftmargin"
         android:textColor="#fff"
@@ -52,7 +40,7 @@
         android:layout_width="@dimen/mainactivity_edittext_width"
         android:layout_height="wrap_content"
         android:hint="Enter new product"
-
+        android:text=""
         android:textColor="#fff"
         android:drawableTint="#006fff"
         android:layout_marginLeft="@dimen/mainactivity_edittext_leftmargin"

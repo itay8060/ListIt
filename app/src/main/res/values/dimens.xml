@@ -2,17 +2,29 @@
 <resources>
 
     <!-- Default margins -->
-    <dimen name="activity_label_topmargin">7dp</dimen>
+    <dimen name="activity_label_topmargin">22dp</dimen>
     <dimen name="activity_leftmargin">16dp</dimen>
     <dimen name="activity_rightmargin">16dp</dimen>
     <dimen name="activity_margin">16dp</dimen>
     <dimen name="activity_bottommargin">6dp</dimen>
     <dimen name="itemviews_spacing">4dp</dimen>
 
+    <!-- Login activity margins -->
+    <dimen name="loginactivity_card_topmargin">52dp</dimen>
+    <dimen name="loginactivity_signupBtn_topmargin">10dp</dimen>
+
+    <!-- Register activity margins -->
+    <dimen name="registeractivity_card_topmargin">28dp</dimen>
+    <dimen name="registeractivity_card_bottommargin">19dp</dimen>
+    <dimen name="registeractivity_card_padding">6dp</dimen>
+    <dimen name="registeractivity_card_sidemargin">30dp</dimen>
+    <dimen name="registeractivity_bottomButtons_topmargin">18dp</dimen>
+    <dimen name="registeractivity_bottomButtons_bottommargin">15dp</dimen>
+
 
     <!-- Main activity margins -->
     <dimen name="mainactivity_margin">16dp</dimen>
-    <dimen name="mainactivity_listname_topmargin">16dp</dimen>
+    <dimen name="mainactivity_listname_topmargin">11dp</dimen>
     <dimen name="mainactivity_leftmargin">16dp</dimen>
     <dimen name="mainactivity_bottommargin">6dp</dimen>
     <dimen name="mainactivity_edittext_leftmargin">14dp</dimen>
@@ -23,13 +35,16 @@
     <dimen name="editactivity_leftmargin">16dp</dimen>
     <dimen name="editactivity_addnotelayout_topmargin">5dp</dimen>
     <dimen name="editactivity_picture_topmargin">5dp</dimen>
+    <dimen name="editactivity_categoryBtn_topmargin">8dp</dimen>
+    <dimen name="editactivity_categoryBtn_leftmargin">15dp</dimen>
     <dimen name="editactivity_text_leftmargin">5dp</dimen>
     <dimen name="editactivity_button_margin">14dp</dimen>
+    <dimen name="editactivity_label_topmargin">7dp</dimen>
     <dimen name="editactivity_addpicturesicons_spacing">6dp</dimen>
 
     <!-- Edit item activity sizes -->
-    <dimen name="editactivity_dialoge_width">310dp</dimen><!-- not in use yet becuase of problems -->
-    <dimen name="editactivity_dialoge_height">360dp</dimen><!-- not in use yet becuase of problems -->
+    <dimen name="editactivity_width">310dp</dimen><!-- not in use yet becuase of problem in xml -->
+    <dimen name="editactivity_height">400dp</dimen><!-- not in use yet becuase of problem in xml -->
     <dimen name="editactivity_edittext_width">235dp</dimen>
     <dimen name="editactivity_imageicons_width">35dp</dimen>
     <dimen name="editactivity_imageicons_height">35dp</dimen>
@@ -41,8 +56,15 @@
     <dimen name="activity_addbtn_hieght">30dp</dimen>
     <dimen name="activity_addbtn_width">30dp</dimen>
 
+    <!-- Register activity sizes -->
+    <dimen name="registeractivity_bottomButtons_hieght">35dp</dimen>
+    <dimen name="registeractivity_bottomButtons_width">85dp</dimen>
 
-
+    <!-- Login activity sizes -->
+    <dimen name="loginactivity_registerBtn_hieght">25dp</dimen>
+    <dimen name="loginactivity_registerBtn_width">85dp</dimen>
+    <dimen name="loginactivity_loginBtn_hieght">48dp</dimen>
+    <dimen name="loginactivity_loginBtn_width">200dp</dimen>
 
 
 </resources>

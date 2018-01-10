@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="310dp"
-    android:layout_height="400dp"
+    android:layout_height="450dp"
     android:background="#4FB6D5"
     android:layout_centerInParent="true"
     android:elevation="4dp"
@@ -26,7 +26,7 @@
         android:textColor="#fff"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/activity_label_topmargin"/>
+        android:layout_marginTop="@dimen/editactivity_label_topmargin"/>
 
     <Button
         android:id="@+id/editactivity_closebtn"
@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/editactivity_addpicture_layouts_height"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/activity_label_topmargin"
+        android:layout_marginTop="@dimen/editactivity_label_topmargin"
         android:weightSum="2"
         android:layout_below="@+id/editactivity_addpid_textview">
 
@@ -149,11 +149,23 @@
 
     </LinearLayout>
 
+        <Button
+            android:id="@+id/editactivity_categoryBtn"
+            android:layout_width="230dp"
+            android:layout_marginLeft="@dimen/editactivity_categoryBtn_leftmargin"
+            android:layout_marginTop="@dimen/editactivity_categoryBtn_topmargin"
+            android:layout_height="40dp"
+            android:text="Category:"
+            android:textColor="#3a3a3a"
+            android:textAllCaps="false"
+            android:background="@drawable/category_btn"
+            android:layout_below="@id/editactivity_picture_layout"/>
+
     <RelativeLayout
         android:id="@+id/editactivity_notes_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editactivity_picture_layout">
+        android:layout_below="@id/editactivity_categoryBtn">
 
         <RelativeLayout
             android:id="@+id/editactivity_addnote_layout"

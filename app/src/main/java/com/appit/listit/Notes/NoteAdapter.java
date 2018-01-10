@@ -14,7 +14,7 @@ import com.appit.listit.R;
 import java.util.List;
 
 /**
- * Created by איתי פלדמן on 13/12/2017.
+ * Created by itay feldman on 13/12/2017.
  */
 
 public class NoteAdapter extends BaseAdapter {

@@ -5,20 +5,20 @@ import com.appit.listit.Products.Product;
 import java.util.ArrayList;
 
 /**
- * Created by איתי פלדמן on 31/12/2017.
+ * Created by itay feldman on 31/12/2017.
  */
 
 public class SubList{
 
     private String subListTitle;
-    private long categoryId;
+    private String categoryId;
     private ArrayList<Product> productsList;
 
     public SubList(){
 
     }
 
-    public SubList(String listTitle, long categoryId){
+    public SubList(String listTitle, String categoryId){
         this.subListTitle = listTitle;
         this.categoryId = categoryId;
     }
@@ -31,7 +31,7 @@ public class SubList{
         this.subListTitle = subListTitle;
     }
 
-    public long getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 }

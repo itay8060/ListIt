@@ -6,23 +6,23 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by איתי פלדמן on 07/12/2017.
+ * Created by itay feldman on 07/12/2017.
  */
 
 public class List extends SugarRecord {
 
-    private long listOnlineId;
+    private String listOnlineId;
     private String listName;
-    private String userName;
+    private String userId;
     private String listCreateDate;
     private boolean listDone;
 
     public List(){
     }
 
-    public List(String listName, String createrName){
+    public List(String userId, String listName){
         this.listName = listName;
-        this.userName = createrName;
+        this.userId = userId;
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
         String formattedDate = df.format(c.getTime());
@@ -30,11 +30,12 @@ public class List extends SugarRecord {
         this.listDone = false;
     }
 
-    public void setListOnlineId(long listOnlineId){
+    public void setListOnlineId(String listOnlineId){
         this.listOnlineId = listOnlineId;
+        this.save();
     }
 
-    public long getListOnlineId(){
+    public String getListOnlineId(){
         return this.listOnlineId;
     }
 
@@ -46,12 +47,13 @@ public class List extends SugarRecord {
         return this.listName;
     }
 
-    public void setUserName(String userName){
-        this.userName = userName;
+    public void setUserId(String userId){
+        this.userId = userId;
+        this.save();
     }
 
-    public String getUserName(){
-        return this.userName;
+    public String getUserId(){
+        return this.userId;
     }
 
     public boolean listIsDone(){
@@ -62,8 +64,7 @@ public class List extends SugarRecord {
         this.listDone = !this.listDone;
     }
 
-    public String getListDate(){
-        return this.listCreateDate;
+    public String getListCreateDate() {
+        return listCreateDate;
     }
-
 }
