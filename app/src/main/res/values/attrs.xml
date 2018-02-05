@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="is_rtl">false</bool>
+
+    <declare-styleable name="Persian">
+        <attr name="customTypeface" format="string" />
+        <attr name="withSeparator" format="boolean" />
+    </declare-styleable>
+</resources>

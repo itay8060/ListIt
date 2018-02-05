@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     android:id="@+id/productview_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/trans"
     android:elevation="3dp"
+    android:layout_height="@dimen/productview_hieght"
+    android:background="@drawable/product_backround"
     android:clickable="true"
-    android:padding="@dimen/itemviews_spacing">
+    android:layout_marginBottom="@dimen/productviews_spacing">
 
     <RelativeLayout
         android:id="@+id/checkbox_layout"
-        android:layout_width="45dp"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_width="@dimen/productview_checkbox_width"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
     <CheckBox
         android:id="@+id/done"
@@ -26,28 +25,32 @@
 
     <RelativeLayout
         android:id="@+id/productName_layout"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/checkbox_layout"
-        android:layout_centerVertical="true"
+        android:layout_width="@dimen/productview_textview_width"
+        android:gravity="center_vertical"
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/checkbox_layout"
         android:clickable="true">
 
     <TextView
         android:id="@+id/productName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="8dp"
         android:clickable="false"
-        android:layout_centerVertical="true"/>
+        android:textSize="@dimen/productview_textsize"
+        android:textStyle="bold"
+        />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/quantity_layout"
-        android:layout_width="90dp"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/productName_layout">
+        android:id="@+id/amount_layout"
+        android:layout_width="@dimen/productview_quantitylayout_width"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true">
 
     <ImageButton
         android:id="@+id/subQuantityBtn"
@@ -66,8 +69,8 @@
         android:background="@color/white"
         android:elevation="1dp"
         android:padding="@dimen/itemviews_spacing"
-        android:layout_marginLeft="@dimen/itemviews_spacing"
-        android:layout_marginRight="@dimen/itemviews_spacing"
+        android:layout_marginStart="@dimen/itemviews_spacing"
+        android:layout_marginEnd="@dimen/itemviews_spacing"
         android:layout_alignBottom="@+id/subQuantityBtn"
         android:layout_toLeftOf="@+id/addQuantityBtn"
         android:layout_centerVertical="true"/>
@@ -83,4 +86,10 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+    <View
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white"/>
+
+</RelativeLayout>

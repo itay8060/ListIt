@@ -1,4 +1,4 @@
-package com.appit.listit.LoginAndRegister;
+package com.appit.listit.LoginPackage;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.appit.listit.GroceryList.MainActivity;
+import com.appit.listit.General.MainActivity;
 import com.appit.listit.R;
 import com.appit.listit.Users.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -117,8 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "Registration failed.",
                                         Toast.LENGTH_SHORT).show();
                             }
-
-                            // ...
                         }
                     });
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/sublist_body"
+    android:layout_marginBottom="@dimen/sublist_mainlayout_bottommargin"
+    android:elevation="2dp">
+
+    <RelativeLayout
+        android:id="@+id/subList_textView_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/sublist_header"
+        android:layout_margin="@dimen/sublist_innerlayout_margin"
+        android:elevation="1dp">
+
+    <TextView
+        android:id="@+id/subList_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/sublist_innerlayout_margin"
+        android:textSize="@dimen/sublist_textsize"
+        android:textColor="@color/md_red_A700"
+        />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/subList_products_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/itemviews_spacing"
+        android:paddingBottom="@dimen/itemviews_spacing"
+        android:paddingRight="@dimen/itemviews_spacing"
+        android:layout_below="@id/subList_textView_layout">
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/customdialog"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/categorydialoge_label_toppadding"
+    android:paddingRight="@dimen/customdialog_padding"
+    android:paddingBottom="@dimen/customdialog_padding"
+    android:paddingLeft="@dimen/customdialog_padding"
+    android:background="@drawable/category_btn2"
+    android:minWidth="@dimen/customdialog_minWidth">
+
+    <TextView
+        android:id="@+id/categoryDialoge_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#377f95"
+        android:text="@string/category_dialoge_label"
+        android:textSize="@dimen/customdialog_textsize"
+        android:paddingBottom="@dimen/customdialog_padding"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/dialoglist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryDialoge_textview"
+        android:divider="#377f95"
+        android:dividerHeight="1.0sp"/>
+
+</RelativeLayout>

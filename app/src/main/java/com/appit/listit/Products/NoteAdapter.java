@@ -1,4 +1,4 @@
-package com.appit.listit.Notes;
+package com.appit.listit.Products;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.appit.listit.Products.ItemClickListener;
+import com.appit.listit.Utilities.ItemClickListener;
 import com.appit.listit.R;
 
 import java.util.List;

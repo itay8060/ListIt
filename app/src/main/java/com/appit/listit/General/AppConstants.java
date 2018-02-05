@@ -16,7 +16,10 @@ public class AppConstants {
     public static final int NOTE = 2;
     public static final int RESULT_DELETED = 3;
     public static final int EDIT_CATEGORY = 0;
+    public static final int STATUS = 0;
     public static final int ADD_PRODUCT = 1;
     public static final int DELETE_PRODUCT = 2;
+    public static final String NOTE_ID = "noteId";
+    public static final String PRODUCT_ID = "productId";
 
 }

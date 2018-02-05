@@ -1,4 +1,4 @@
-package com.appit.listit.Notes;
+package com.appit.listit.Products;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +13,12 @@ import android.widget.EditText;
 import com.appit.listit.General.AppConstants;
 import com.appit.listit.R;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.orm.SugarRecord.findWithQuery;
 
 /**
  * Created by אitay feldman on 15/12/2017.
@@ -30,6 +34,7 @@ public class NoteEditActivity extends AppCompatActivity {
     Button editnoteactivityConfirmbtn;
     @BindView(R.id.editnoteactivity_deletebtn)
     Button editnoteactivityDeletebtn;
+    String id;
     Note note;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,13 +42,15 @@ public class NoteEditActivity extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.editnote_activity);
         Intent intent = getIntent();
-        long id = intent.getLongExtra("myNote",0);
-        note = Note.findById(Note.class, id);
+        id = intent.getStringExtra(AppConstants.NOTE_ID);
         ButterKnife.bind(this);
+        activityInits();
+    }
 
+    private void activityInits() {
+        getNote();
         loadNoteData();
         setOnClickListeners();
-
     }
 
     private void loadNoteData(){
@@ -95,4 +102,10 @@ public class NoteEditActivity extends AppCompatActivity {
         finish();
     }
 
+    public Note getNote() {
+        java.util.List<Note> notesListTemp = new ArrayList();
+        notesListTemp = findWithQuery(Note.class, "Select * from Note where note_online_id = ?", id);
+        note = notesListTemp.get(0);
+        return note;
     }
+}

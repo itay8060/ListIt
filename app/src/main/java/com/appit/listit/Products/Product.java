@@ -1,5 +1,7 @@
 package com.appit.listit.Products;
 
+import android.graphics.Bitmap;
+
 import com.orm.SugarRecord;
 
 /**
@@ -10,21 +12,14 @@ public class Product extends SugarRecord {
 
     private String productOnlineId;
     private String productName;
-    private boolean productDone;
-    private int quantity;
-    //private Bitmap productImage;
-    private String listId;
+    private Bitmap productImage;
     private String categoryId;
 
     public Product(){
     }
 
-    public Product(String productName, String listId, String categoryId){
+    public Product(String productName, String categoryId){
         this.productName = productName;
-        this.listId = listId;
-        this.quantity = 1;
-        this.productDone = false;
-        //this.productImage = null;
         this.categoryId = categoryId;
     }
 
@@ -45,44 +40,15 @@ public class Product extends SugarRecord {
         return this.productName;
     }
 
-    public boolean productIsDone(){
-        return this.productDone;
-    }
 
-    public void productToggleChecked(){
-        this.productDone = !this.productDone;
-        this.save();
-    }
 
-    public void increaseQuantity() {
-        this.quantity += 1;
-        this.save();
-    }
-
-    public void decreaseQuantity() {
-        this.quantity -= 1;
-        this.save();
-    }
-
-    public int getQuantity() {
-        return this.quantity;
-    }
-
-    /*public void setProductImage(Bitmap bm){
+    public void setProductImage(Bitmap bm){
         this.productImage = bm;
+        this.save();
     }
 
     public Bitmap getProductImage(){
         return this.productImage;
-    }*/
-
-    public void setListId(String listId){
-        this.listId = listId;
-        this.save();
-    }
-
-    public String getListId(){
-        return this.listId;
     }
 
     public String getCategorytId(){

@@ -1,5 +1,7 @@
 package com.appit.listit.FireBasePackage;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by itay feldman on 09/01/2018.
  */
@@ -8,24 +10,21 @@ public class ProductFireBase {
 
     private String productOnlineId;
     private String productName;
-    private boolean productDone;
-    private int quantity;
-    //private Bitmap productImage;
-    private String listId;
+    private Bitmap productImage;
     private String categoryId;
+
+    public ProductFireBase(){
+    }
+
+    public ProductFireBase(String productOnlineId, String productName,  String categoryId){
+        this.productOnlineId = productOnlineId;
+        this.productName = productName;
+        this.productImage = null;
+        this.categoryId = categoryId;
+    }
 
     public String getCategoryId() {
         return categoryId;
-    }
-
-    public ProductFireBase(String productOnlineId, String productName, boolean productDone, int quantity, String listId, String categoryId){
-        this.productOnlineId = productOnlineId;
-        this.productName = productName;
-        this.listId = listId;
-        this.quantity = quantity;
-        this.productDone = productDone;
-        //this.productImage = null;
-        this.categoryId = categoryId;
     }
 
     public void setProductOnlineId(String productOnlineId) {
@@ -36,23 +35,9 @@ public class ProductFireBase {
         this.productName = productName;
     }
 
-    public void setProductDone(boolean productDone) {
-        this.productDone = productDone;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setListId(String listId) {
-        this.listId = listId;
-    }
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public ProductFireBase(){
     }
 
     public String getProductOnlineId() {
@@ -63,16 +48,12 @@ public class ProductFireBase {
         return productName;
     }
 
-    public boolean isProductDone() {
-        return productDone;
+    public void setProductImage(Bitmap productImage) {
+        this.productImage = productImage;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public String getListId() {
-        return listId;
+    public Bitmap getProductImage() {
+        return productImage;
     }
 
 }

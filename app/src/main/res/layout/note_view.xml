@@ -14,8 +14,8 @@
         android:id="@+id/note_TxtView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:layout_marginLeft="@dimen/editactivity_text_leftmargin"
+        android:textSize="@dimen/editnoteactivity_edittext_textsize"
+        android:layout_marginStart="@dimen/editactivity_text_startmargin"
         android:textColor="#000000"/>
 
 </RelativeLayout>

@@ -8,12 +8,14 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.appit.listit.DBPackage.RelatedListProduct;
 import com.appit.listit.General.AppConstants;
-import com.appit.listit.Products.ItemClickListener;
-import com.appit.listit.Products.Product;
 import com.appit.listit.R;
+import com.appit.listit.Utilities.ItemClickListener;
+import com.appolica.flubber.Flubber;
 
 /**
  * Created by אitay feldman on 31/12/2017.
@@ -22,11 +24,11 @@ import com.appit.listit.R;
 public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListHolder> {
 
     private java.util.List<SubList> subListsList;
-    private java.util.List<Product> productsList;
+    private java.util.List<RelatedListProduct> productsList;
     private ItemClickListener clickListener;
     private Context context;
 
-    public SubListAdapter (java.util.List<SubList> subListsList, java.util.List<Product> productsList, ItemClickListener clickListener, Context context/*, OnStartDragListener mDragStartListener*/){
+    public SubListAdapter (java.util.List<SubList> subListsList, java.util.List<RelatedListProduct> productsList, ItemClickListener clickListener, Context context/*, OnStartDragListener mDragStartListener*/){
         this.subListsList = subListsList;
         this.productsList = productsList;
         this.clickListener = clickListener;
@@ -37,6 +39,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
     public SubListHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         return new SubListHolder(LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.sublist_view, parent, false));
+
 
     }
 
@@ -50,6 +53,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
         LinearLayout list = (LinearLayout) holder.productsLayout.findViewById(R.id.subList_products_layout);
         list.removeAllViews();
 
+
         for (int i = 0; i < productsList.size(); i++)
         {
             if (productsList.get(i).getCategorytId().equals(String.valueOf(subListsList.get(position).getCategoryId()))) {
@@ -58,12 +62,13 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
                 View line = list.inflate(context, R.layout.product_view, null);
 
                 TextView productName = ((TextView) line.findViewById(R.id.productName));
+                RelativeLayout nameLayout = ((RelativeLayout) line.findViewById(R.id.productName_layout));
                 CheckBox checkBox = ((CheckBox) line.findViewById(R.id.done));
                 ImageButton subQunBtn = ((ImageButton) line.findViewById(R.id.subQuantityBtn));
                 TextView productQuntity = ((TextView) line.findViewById(R.id.productQuntity));
                 ImageButton addQuantityBtn = ((ImageButton) line.findViewById(R.id.addQuantityBtn));
 
-                final Product product = getProductItem(i);
+                final RelatedListProduct product = getProductItem(i);
                 checkBox.setChecked(product.productIsDone());
                 productName.setText(product.getProductName());
                 productQuntity.setText(String.valueOf(product.getQuantity()));
@@ -84,17 +89,24 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
                 checkBox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Flubber.with()
+                                .animation(Flubber.AnimationPreset.POP) // Slide up animation
+                                .repeatCount(0)                              // Repeat once
+                                .duration(1000)                              // Last for 1000 milliseconds(1 second)
+                                .createFor(v)                             // Apply it to the view
+                                .start();
                         clickListener.onClick(v, AppConstants.CHECKBOX, k);
                     }
                 });
 
-                productName.setOnClickListener(new View.OnClickListener() {
+                nameLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         clickListener.onClick(v, AppConstants.EDIT_PRODUCT_CONST, k);
                     }
                 });
-
                 list.addView(line);
             }else continue;
         }
@@ -105,7 +117,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
         return subListsList.get(i);
     }
 
-    public Product getProductItem(int i){
+    public RelatedListProduct getProductItem(int i){
         return productsList.get(i);
     }
 

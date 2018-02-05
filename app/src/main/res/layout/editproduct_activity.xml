@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="310dp"
-    android:layout_height="450dp"
-    android:background="#4FB6D5"
+    android:layout_width="@dimen/editactivity_width"
+    android:layout_height="@dimen/editactivity_height"
+    android:background="@drawable/category_btn2"
     android:layout_centerInParent="true"
     android:elevation="4dp"
     android:gravity="center">
@@ -11,30 +11,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/editactivity_backgroungmargin"
-        android:layout_marginRight="@dimen/editactivity_backgroungmargin"
+        android:layout_marginStart="@dimen/editactivity_backgroungmargin"
+        android:layout_marginEnd="@dimen/editactivity_backgroungmargin"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
 
     <TextView
-        android:id="@+id/editactivity_addpid_textview"
+        android:id="@+id/editactivity_label_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Item"
+        android:text="@string/editproduct_label"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:textColor="#fff"
-        android:textSize="22sp"
+        android:textColor="#377f95"
+        android:textSize="@dimen/editactivity_text_size"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/editactivity_label_topmargin"/>
 
-    <Button
+    <RelativeLayout
         android:id="@+id/editactivity_closebtn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:background="@drawable/ic_close_black_24dp"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/editactivity_button_margin"/>
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/ic_close_black_24dp"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/editactivity_picture_layout"
@@ -43,7 +50,7 @@
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/editactivity_label_topmargin"
         android:weightSum="2"
-        android:layout_below="@+id/editactivity_addpid_textview">
+        android:layout_below="@+id/editactivity_label_textview">
 
         <RelativeLayout
             android:id="@+id/editactivity_addpicture_layout"
@@ -56,9 +63,9 @@
                 android:id="@+id/editactivity_addpicture_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Picture"
-                android:textColor="#fff"
-                android:textSize="22sp"
+                android:text="@string/editproduct_addPicture_label"
+                android:textColor="#377f95"
+                android:textSize="@dimen/editactivity_text_size"
                 android:textStyle="bold"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
@@ -77,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:onClick="fromCamera"
                     android:clickable="true"
-                    android:layout_marginRight="@dimen/editactivity_addpicturesicons_spacing">
+                    android:layout_marginEnd="@dimen/editactivity_addpicturesicons_spacing">
 
                     <ImageButton
                         android:id="@+id/editactivity_addpicturecamera_imagebtn"
@@ -93,8 +100,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/editactivity_addpicturecamera_imagebtn"
-                        android:text="camera"
-                        android:textSize="14dp"
+                        android:text="@string/editproduct_camera_label"
+                        android:textSize="@dimen/editactivity_pictureoptions_textsize"
+                        android:textColor="#377f95"
                         android:layout_centerHorizontal="true"/>
 
                 </RelativeLayout>
@@ -105,8 +113,8 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:onClick="fromGallery"
-                    android:layout_toRightOf="@id/editactivity_addpicturecamera_layout"
-                    android:layout_marginLeft="@dimen/editactivity_addpicturesicons_spacing">
+                    android:layout_toEndOf="@id/editactivity_addpicturecamera_layout"
+                    android:layout_marginStart="@dimen/editactivity_addpicturesicons_spacing">
 
                     <ImageButton
                         android:id="@+id/editactivity_addpicturegallery_imagebtn"
@@ -121,8 +129,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/editactivity_addpicturegallery_imagebtn"
-                        android:text="gallery"
-                        android:textSize="14dp"
+                        android:text="@string/editproduct_gallery_label"
+                        android:textSize="@dimen/editactivity_pictureoptions_textsize"
+                        android:textColor="#377f95"
                         android:layout_centerHorizontal="true" />
 
                     </RelativeLayout>
@@ -135,14 +144,14 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/editactivity_addpicture_layout">
+            android:layout_toEndOf="@id/editactivity_addpicture_layout">
 
             <ImageView
                 android:id="@+id/editactivity_picture_imageview"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:layout_marginRight="@dimen/activity_rightmargin"
-                android:background="@drawable/defaultimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_endmargin"
+                android:src="@drawable/defaultimage"
                 android:layout_centerInParent="true"/>
 
         </RelativeLayout>
@@ -151,11 +160,11 @@
 
         <Button
             android:id="@+id/editactivity_categoryBtn"
-            android:layout_width="230dp"
-            android:layout_marginLeft="@dimen/editactivity_categoryBtn_leftmargin"
+            android:layout_width="@dimen/editactivity_categoryBtn_width"
+            android:layout_marginStart="@dimen/editactivity_categoryBtn_leftmargin"
             android:layout_marginTop="@dimen/editactivity_categoryBtn_topmargin"
-            android:layout_height="40dp"
-            android:text="Category:"
+            android:layout_height="@dimen/editactivity_categoryBtn_height"
+            android:text="@string/editproduct_category_label"
             android:textColor="#3a3a3a"
             android:textAllCaps="false"
             android:background="@drawable/category_btn"
@@ -178,21 +187,21 @@
                 android:id="@+id/editactivity_note_edittext"
                 android:layout_width="@dimen/editactivity_edittext_width"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/mainactivity_leftmargin"
-                android:hint="Enter note"
+                android:layout_marginStart="@dimen/mainactivity_startmargin"
+                android:hint="@string/editproduct_edittext_hint"
                 android:inputType="text"
                 android:maxLines="2"
-                android:textColor="#fff"
-                android:textColorHint="#fff"
+                android:textColor="#377f95"
+                android:textColorHint="#377f95"
                 android:textSize="15dp" />
 
             <Button
                 android:id="@+id/editactivity_addbtn"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="@dimen/editactivity_btn_width"
+                android:layout_height="@dimen/editactivity_btn_hieght"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/activity_margin"
-                android:layout_toRightOf="@id/editactivity_note_edittext"
+                android:layout_toEndOf="@id/editactivity_note_edittext"
                 android:background="@drawable/ic_add_circle_24dp"
                 android:onClick="addNote" />
 
@@ -205,8 +214,7 @@
             android:layout_below="@id/editactivity_addnote_layout"
             android:layout_margin="@dimen/activity_margin"
             android:divider="@android:color/transparent"
-            android:dividerHeight="6.0sp"
-            android:layout_alignParentEnd="true"/>
+            android:dividerHeight="6.0sp"/>
 
         </RelativeLayout>
 

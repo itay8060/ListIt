@@ -1,4 +1,4 @@
-package com.appit.listit.Helpers;
+package com.appit.listit.Utilities;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -23,15 +24,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appit.listit.DBPackage.ObjectsManager;
+import com.appit.listit.DBPackage.RelatedListProduct;
 import com.appit.listit.FireBasePackage.FireBaseDataManager;
 import com.appit.listit.General.AppConstants;
-import com.appit.listit.Notes.Note;
-import com.appit.listit.Notes.NoteAdapter;
-import com.appit.listit.Notes.NoteEditActivity;
 import com.appit.listit.R;
+import com.appit.listit.Utilities.ItemClickListener;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,10 +47,8 @@ import static com.orm.SugarRecord.findWithQuery;
 
 public class EditProductActivity extends AppCompatActivity {
 
-    @BindView(R.id.editactivity_addpid_textview)
-    TextView editactivityAddpidTextview;
-    @BindView(R.id.editactivity_closebtn)
-    Button editactivityClosebtn;
+    @BindView(R.id.editactivity_label_textview)
+    TextView editactivityLabelTextview;
     @BindView(R.id.editactivity_addpicture_layout)
     RelativeLayout editactivityAddpictureLayout;
     @BindView(R.id.editactivity_picture_imageview)
@@ -61,8 +60,10 @@ public class EditProductActivity extends AppCompatActivity {
     @BindView(R.id.editactivity_categoryBtn)
     Button editactivityCategoryBtn;
     ListView dialoglist;
+    @BindView(R.id.editactivity_closebtn)
+    RelativeLayout editactivityClosebtn;
     private List<Note> notesList;
-    Product product;
+    RelatedListProduct product;
     ItemClickListener clickListener;
     private String productId;
     private Dialog dialog;
@@ -74,7 +75,7 @@ public class EditProductActivity extends AppCompatActivity {
         setContentView(R.layout.editproduct_activity);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        productId = intent.getStringExtra("productId");
+        productId = intent.getStringExtra(AppConstants.PRODUCT_ID);
 
         /*if (product.getProductImage()!=null){
             editactivityPictureImageview.setImageBitmap(product.getProductImage());
@@ -90,11 +91,10 @@ public class EditProductActivity extends AppCompatActivity {
     }
 
     private void firstInitiation() {
-        java.util.List<Product> productsListTemp = new ArrayList();
-        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", productId);
-        product = productsListTemp.get(0);
+        product = ObjectsManager.getRelatedProductFromOnlineId(productId);
+        //editactivityPictureImageview.setImageBitmap(product.getProductImage());
         String categoryName = ObjectsManager.getCategoryNameById(product.getCategorytId());
-        editactivityCategoryBtn.setText("Category : " + categoryName);
+        editactivityCategoryBtn.setText(getResources().getString(R.string.editproduct_category_label) + " " + categoryName);
     }
 
     private void initClickListeners() {
@@ -117,13 +117,13 @@ public class EditProductActivity extends AppCompatActivity {
 
         {
             @Override
-            public void onClick (View v){
+            public void onClick(View v) {
                 closeEditProduct();
             }
         });
     }
 
-    private void checkPermissions() {
+    private void checkPermissions(int src) {
 
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -137,18 +137,12 @@ public class EditProductActivity extends AppCompatActivity {
             }
         };
 
-        TedPermission.with(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
-                .check();
-
-        /*switch (src){
+        switch (src) {
             case AppConstants.GALLERY:
                 TedPermission.with(this)
                         .setPermissionListener(permissionlistener)
                         .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
-                        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE,)
+                        .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE)
                         .check();
                 break;
             case AppConstants.CAMERA:
@@ -158,7 +152,7 @@ public class EditProductActivity extends AppCompatActivity {
                         .setPermissions(Manifest.permission.CAMERA)
                         .check();
                 break;
-        }*/
+        }
     }
 
     private void runClickListeners() {
@@ -179,7 +173,7 @@ public class EditProductActivity extends AppCompatActivity {
 
     private void openEditNoteActivity(int i) {
         Intent intent = new Intent(EditProductActivity.this, NoteEditActivity.class);
-        intent.putExtra("myNote", notesList.get(i).getNoteOnlineId());
+        intent.putExtra(AppConstants.NOTE_ID, notesList.get(i).getNoteOnlineId());
         startActivityForResult(intent, AppConstants.NOTE);
     }
 
@@ -189,14 +183,19 @@ public class EditProductActivity extends AppCompatActivity {
     }
 
     public void addNote(View v) {
-        java.util.List<com.appit.listit.Lists.List> listsListTemp = new ArrayList();
-        listsListTemp = findWithQuery(com.appit.listit.Lists.List.class, "Select * from List where list_online_id = ?",product.getListId() );
-        com.appit.listit.Lists.List tempList = listsListTemp.get(0);
-        Note note = new Note(editactivityNoteEdittext.getText().toString(), tempList.getUserId(), product.getProductOnlineId());
-        note.save();
-        FireBaseDataManager.addFireBaseNote(note, productId);
-        editactivityNoteEdittext.setText("");
-        refreshNotes();
+        if (editactivityNoteEdittext.getText().toString().equals("")){
+            Toast.makeText(this, getString(R.string.enter_note_toast), Toast.LENGTH_LONG).show();
+        }
+        else {
+            List<com.appit.listit.Lists.List> listsListTemp = new ArrayList();
+            listsListTemp = findWithQuery(com.appit.listit.Lists.List.class, "Select * from List where list_online_id = ?", product.getRelatedListId());
+            com.appit.listit.Lists.List tempList = listsListTemp.get(0);
+            Note note = new Note(editactivityNoteEdittext.getText().toString(), tempList.getUserId(), product.getRelatedProductOnlineId());
+            note.save();
+            FireBaseDataManager.addFireBaseNote(note, productId, product.getRelatedListId());
+            editactivityNoteEdittext.setText("");
+            refreshNotes();
+        }
     }
 
     //endregion Notes
@@ -210,13 +209,13 @@ public class EditProductActivity extends AppCompatActivity {
     //region Image funcs
 
     public void fromGallery(View v) {
-        checkPermissions();
+        checkPermissions(AppConstants.GALLERY);
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(i, AppConstants.GALLERY);
     }
 
     public void fromCamera(View v) {
-        checkPermissions();
+        checkPermissions(AppConstants.CAMERA);
         Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(i, AppConstants.CAMERA);
     }
@@ -224,15 +223,24 @@ public class EditProductActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent i) {
         super.onActivityResult(requestCode, resultCode, i);
+        Bitmap bitmap = null;
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case AppConstants.GALLERY:
-                    editactivityPictureImageview.setImageURI(i.getData());
+                    Uri imageUri = i.getData();
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //ObjectsManager.getProductFromOnlineId(productId).setProductImage(bitmap);
+                    editactivityPictureImageview.setImageBitmap(bitmap);
                     break;
                 case AppConstants.CAMERA:
-                    Bitmap bm;
-                    bm = (Bitmap) i.getExtras().get("data");
-                    editactivityPictureImageview.setImageBitmap(bm);
+                    bitmap = (Bitmap) i.getExtras().get("data");
+                    //ObjectsManager.getProductFromOnlineId(productId).setProductImage(bitmap);
+                    product.save();
+                    editactivityPictureImageview.setImageBitmap(bitmap);
                     break;
                 case AppConstants.NOTE:
                     refreshNotes();
@@ -256,33 +264,32 @@ public class EditProductActivity extends AppCompatActivity {
     //region Dialog funcs
 
     protected void createDialog() {
-        dialog = new Dialog(this);
         dialog = new Dialog(EditProductActivity.this);
         dialog.setContentView(R.layout.category_dialoglayout);
-        dialog.setTitle("Choose category");
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
 
-            //Prepare ListView in dialog
-            dialoglist = (ListView)dialog.findViewById(R.id.dialoglist);
-            ArrayList<String> listContent = ObjectsManager.getCategoryAsStrings();
-            ArrayAdapter<String> adapter
-                    = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, listContent);
-            dialoglist.setAdapter(adapter);
-            dialoglist.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        //Prepare ListView in dialog
+        dialoglist = (ListView) dialog.findViewById(R.id.dialoglist);
+        ArrayList<String> listContent = ObjectsManager.getCategoriesAsStrings();
+        ArrayAdapter<String> adapter
+                = new ArrayAdapter<String>(this,
+                R.layout.category_view, listContent);
+        dialoglist.setAdapter(adapter);
+        dialoglist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                                        int position, long id) {
-                    Toast.makeText(EditProductActivity.this,
-                            parent.getItemAtPosition(position).toString() + " clicked",
-                            Toast.LENGTH_LONG).show();
-                    ObjectsManager.setNewCategoryToProduct(productId, parent.getItemAtPosition(position).toString());
-                    editactivityCategoryBtn.setText("Category : " + parent.getItemAtPosition(position).toString());
-                    dialog.cancel();
-                }});
-    //return dialog;
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(EditProductActivity.this,
+                        getResources().getString(R.string.editproduct_category_toast) + " " + parent.getItemAtPosition(position).toString(),
+                        Toast.LENGTH_LONG).show();
+                ObjectsManager.setNewCategoryToProduct(productId, parent.getItemAtPosition(position).toString());
+                editactivityCategoryBtn.setText(getResources().getString(R.string.editproduct_category_label) + " " + parent.getItemAtPosition(position).toString());
+                dialog.cancel();
+            }
+        });
+        //return dialog;
     }
 
     //endregion Dialog funcs

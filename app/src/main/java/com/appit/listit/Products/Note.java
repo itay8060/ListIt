@@ -1,4 +1,4 @@
-package com.appit.listit.Notes;
+package com.appit.listit.Products;
 
 import com.orm.SugarRecord;
 

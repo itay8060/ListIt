@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ListIt</string>
+
+    <!-- Pages headers labels -->
+    <string name="mainpage_welcomelabel">ברוכים הבאים</string>
+    <string name="mainpage_defaultlist">הרשימה שלי</string>
+    <string name="login_label">התחברות</string>
+    <string name="registration_label">הרשמה</string>
+
+    <!-- Navigation Drawer menu labels -->
+    <string name="drawer_item_default_list">הרשימה שלי</string>
+    <string name="drawer_item_settings">הגדרות</string>
+    <string name="drawer_item_contact">צור קשר</string>
+    <string name="drawer_item_signout">התנתקות</string>
+    <string name="contact_subject">הודעה חדשה מאפליקציית ListIt</string>
+    <string name="no_email_clients">אין רשומות מיילים</string>
+    <string name="select_email_message">נא לבחור אפליקציית מיילים</string>
+    <string name="signout_dialoge_title">התנתקות</string>
+    <string name="signout_dialoge_message">האם את/ה בטוח שברצונך להתנתק?</string>
+    <string name="signout_dialoge_cancel">ביטול</string>
+    <string name="signout_dialoge_ok">אישור</string>
+
+    <!-- Facebook configuration strings -->
+    <string name="facebook_app_id">582817512064760</string>
+    <string name="fb_login_protocol_scheme">fb582817512064760</string>
+
+    <!-- Activities strings -->
+    <string name="first_list_name">הרשימה הראשונה שלי</string>
+    <string name="share_list_msg1">הינה רשימת הקניות שלי : </string>
+    <string name="share_list_msg2">בהצלחה P;</string>
+    <string name="pick_share_option">נא לבחור את האפליקציה שתרצה לשתף דרכה</string>
+    <string name="mainpage_share">שתף רשימה</string>
+    <string name="mainpage_edittext_hint">הזן מוצר</string>
+    <string name="enter_product_name_toast">לא הוזן מוצר</string>
+    <string name="enter_note_toast">הפתק ריק</string>
+    <string name="mainpage_deletechecked_btn">מחק מסומנים</string>
+    <string name="editproduct_label">ערוך מוצר</string>
+    <string name="editproduct_addPicture_label">הוסף תמונה</string>
+    <string name="editproduct_camera_label">מצלמה</string>
+    <string name="editproduct_gallery_label">גלריה</string>
+    <string name="editproduct_category_label">קטגוריה: </string>
+    <string name="editproduct_edittext_hint">הוסף פתק</string>
+    <string name="login_email_hint">מייל</string>
+    <string name="login_password_hint">סיסמא</string>
+    <string name="login_forgotpassword_text">שכחת סיסמא?</string>
+    <string name="login_signinBtn_text">התחברות</string>
+    <string name="login_register_text">הרשמה</string>
+    <string name="register_cancelBtn_text">ביטול</string>
+    <string name="register_confirmBtn_text">אישור</string>
+    <string name="register_name_hint">שם</string>
+    <string name="register_email_hint">מייל</string>
+    <string name="register_password1_hint">סיסמא</string>
+    <string name="register_password2_hint">אימות סיסמא</string>
+    <string name="category_dialoge_label">בחר קטגוריה</string>
+    <string name="adding_product_toexisting">נוספה כמות במוצר הקיים</string>
+    <string name="pressagain_toast">לחץ שוב כדי לצאת מהאפליקציה</string>
+    <string name="loginToUseApp">התחבר כדי להשתמש באפליקציה</string>
+
+    <!-- Categories strings -->
+    <string name="category_others">אחר</string>
+    <string name="category_meatnfish">בשר ודגים</string>
+    <string name="category_dairy">חלבי</string>
+    <string name="category_fruitsnvegs">פירות וירקות</string>
+    <string name="category_beverages">משקאות</string>
+    <string name="category_basicproducts">מוצרי בסיס</string>
+    <string name="category_saucesnspices">רטבים וטבלינים</string>
+    <string name="category_soupsncleaning">סבונים וחומרי ניקוי</string>
+    <string name="category_snacks">חטיפים</string>
+    <string name="category_officesupply">ציוד משרדי</string>
+    <string name="category_breadnbakery">לחם ומאפים</string>
+    <string name="category_healthnbeauty">מוצרי טיפוח ובריאות</string>
+    <string name="category_cereal">דגנים</string>
+
+    <string-array name="category_names">
+        <item>בשר ודגים</item>
+        <item>אחר</item>
+        <item>חלבי</item>
+        <item>פירות וירקות</item>
+        <item>משקאות</item>
+        <item>מוצרי בסיס</item>
+        <item>רטבים וטבלינים</item>
+        <item>חטיפים</item>
+        <item>סבונים וחומרי ניקוי</item>
+        <item>ציוד משרדי</item>
+        <item>לחם ומאפים</item>
+        <item>מוצרי טיפוח ובריאות</item>
+        <item>דגנים</item>
+    </string-array>
+
+    <!-- Demo Products strings -->
+    <string name="product_chicken_breast">חזה עוף</string>
+    <string name="product_ice_cream">גלידה</string>
+    <string name="product_oranges">תפוזים</string>
+
+    <!-- Demo Products notes strings -->
+    <string name="note_ergent">דחוף!</string>
+    <string name="note_allout">נגמר לנו!!</string>
+    <string name="note_anyone">מישהו מביא?!</string>
+
+    <!--Products-->
+    <string-array name="meatnfishproducts_names">
+        <item>בשר</item>
+        <item>דג</item>
+    </string-array>
+
+    <string-array name="dairyproducts_names">
+        <item>חלב</item>
+        <item>גבינה</item>
+    </string-array>
+
+    <string-array name="fruitsnvegsproducts_names">
+        <item>עגבניות</item>
+        <item>מלפפונים</item>
+        <item>לימון</item>
+    </string-array>
+
+    <string-array name="basicproducts_names">
+        <item>סוכר</item>
+        <item>קמח</item>
+        <item>לחם</item>
+    </string-array>
+
+
+</resources>

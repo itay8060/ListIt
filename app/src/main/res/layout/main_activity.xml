@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#5fb0c9"
+    android:background="#fff"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -18,14 +18,28 @@
 
     <TextView
         android:id="@+id/mainactivity_list_name"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/mainpage_defaultlist"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="@dimen/mainactivity_listname_topmargin"
-        android:layout_marginLeft="@dimen/mainactivity_leftmargin"
-        android:textColor="#fff"
-        android:textSize="22sp"
+        android:layout_marginStart="@dimen/mainactivity_startmargin"
+        android:textColor="#5fb0c9"
+        android:textSize="@dimen/mainactivity_listname_textsize"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/mainactivity_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:text="@string/mainpage_share"
+        android:layout_marginTop="@dimen/mainactivity_listname_topmargin"
+        android:layout_marginEnd="@dimen/activity_endmargin"
+        android:layout_alignParentEnd="true"
+        android:textColor="#d67601"
+        android:clickable="true"
+        android:textSize="@dimen/mainactivity_default_textsize"
         android:textStyle="bold"/>
 
     <RelativeLayout
@@ -35,16 +49,19 @@
         android:layout_below="@id/mainactivity_list_name"
         android:layout_marginTop="@dimen/editactivity_addnotelayout_topmargin">
 
-    <EditText
+    <com.appit.listit.UIandViews.CustomAutoCompleteView
         android:id="@+id/newProduct_editText"
         android:layout_width="@dimen/mainactivity_edittext_width"
         android:layout_height="wrap_content"
-        android:hint="Enter new product"
+        android:imeOptions="actionDone"
+        android:hint="@string/mainpage_edittext_hint"
+        android:completionThreshold="1"
         android:text=""
-        android:textColor="#fff"
+        android:textAlignment="viewStart"
+        android:textColor="#5fb0c9"
         android:drawableTint="#006fff"
-        android:layout_marginLeft="@dimen/mainactivity_edittext_leftmargin"
-        android:textColorHint="#fff"
+        android:layout_marginStart="@dimen/mainactivity_edittext_startmargin"
+        android:textColorHint="#5fb0c9"
         android:maxLines="1"
         android:inputType="text"/>
 
@@ -52,9 +69,9 @@
         android:id="@+id/newProductBtn"
         android:layout_width="@dimen/activity_addbtn_width"
         android:layout_height="@dimen/activity_addbtn_hieght"
-        android:layout_toRightOf="@id/newProduct_editText"
+        android:layout_toEndOf="@id/newProduct_editText"
         android:background="@drawable/ic_add_circle_24dp"
-        android:layout_marginLeft="@dimen/mainactivity_leftmargin"
+        android:layout_marginStart="@dimen/mainactivity_startmargin"
         android:onClick="addProduct"
         android:layout_centerVertical="true"/>
 
@@ -62,7 +79,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="340dp"
+        android:layout_height="@dimen/mainactivity_listlayout_hieght"
         android:layout_below="@+id/mainactivity_addproduct_layout"
         android:layout_margin="@dimen/mainactivity_margin"
         android:elevation="8dp">
@@ -73,27 +90,16 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/sublist_view"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentEnd="true"
-            android:divider="@color/grey"
+            android:divider="@color/trans"
             android:dividerHeight="1px"/>
-
-    <!--<ListView
-        android:id="@+id/productsList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="8dp"
-        android:layout_centerHorizontal="true"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="6.0sp"
-        android:layout_alignParentEnd="true" />-->
 
     </RelativeLayout>
 
     <Button
         android:id="@+id/clearCheckedBtn"
-        android:layout_width="140dp"
+        android:layout_width="@dimen/mainactivity_clearCheckedBtn_width"
         android:layout_height="wrap_content"
-        android:text="Delete checked"
+        android:text="@string/mainpage_deletechecked_btn"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:onClick="clearBtn"
@@ -101,6 +107,6 @@
         android:layout_marginBottom="@dimen/mainactivity_bottommargin"
         android:background="#d67601"
         android:textColor="#fff"
-        android:textSize="18sp"/>
+        android:textSize="@dimen/mainactivity_default_textsize"/>
 
 </RelativeLayout>
