@@ -28,6 +28,7 @@ import com.appit.listit.ListItApplication;
 import com.appit.listit.Lists.List;
 import com.appit.listit.Lists.SubList;
 import com.appit.listit.Lists.SubListAdapter;
+import com.appit.listit.Products.Category;
 import com.appit.listit.Products.EditProductActivity;
 import com.appit.listit.Products.Product;
 import com.appit.listit.R;

@@ -1,10 +1,9 @@
 package com.appit.listit.DBPackage;
 
-import android.app.Application;
 import android.util.Log;
 
 import com.appit.listit.FireBasePackage.FireBaseDataManager;
-import com.appit.listit.General.Category;
+import com.appit.listit.Products.Category;
 import com.appit.listit.General.PrefsManager;
 import com.appit.listit.ListItApplication;
 import com.appit.listit.Products.Note;
@@ -21,7 +20,7 @@ import static com.orm.SugarRecord.findWithQuery;
  * Created by itay feldman on 08/01/2018.
  */
 
-public class ObjectsManager extends Application {
+public class ObjectsManager  {
 
     private static List<com.appit.listit.Lists.List> listsList = new ArrayList<>();
     private static List<Product> productsList = new ArrayList<>();

@@ -1,7 +1,7 @@
 package com.appit.listit.Utilities;
 
 import com.appit.listit.DBPackage.RelatedListProduct;
-import com.appit.listit.General.Category;
+import com.appit.listit.Products.Category;
 import com.appit.listit.Lists.SubList;
 
 import java.util.ArrayList;
