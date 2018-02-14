@@ -26,13 +26,16 @@ import com.appit.listit.DBPackage.RelatedListProduct;
 import com.appit.listit.FireBasePackage.FireBaseDataManager;
 import com.appit.listit.ListItApplication;
 import com.appit.listit.Lists.List;
+import com.appit.listit.Lists.ListsActivity;
 import com.appit.listit.Lists.SubList;
 import com.appit.listit.Lists.SubListAdapter;
+import com.appit.listit.LoginPackage.LoginActivity;
 import com.appit.listit.Products.Category;
 import com.appit.listit.Products.EditProductActivity;
 import com.appit.listit.Products.Product;
 import com.appit.listit.R;
 import com.appit.listit.UIandViews.CustomAutoCompleteView;
+import com.appit.listit.UIandViews.UIDialogsManager;
 import com.appit.listit.Utilities.AutoCompleteAdapter;
 import com.appit.listit.Utilities.CustomAutoCompleteTextChangedListener;
 import com.appit.listit.Utilities.ItemClickListener;
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference databaseProducts;
     public String chosenProductName;
     private int pressedTimes;
+    UIDialogsManager dialogManager = new UIDialogsManager(this);
     public static Boolean choseFromSuggestedList = false;
     //endregion Variables initiation
 
@@ -364,6 +368,12 @@ public class MainActivity extends AppCompatActivity {
                 .withIcon(GoogleMaterial.Icon.gmd_home);
 
 
+        PrimaryDrawerItem allListsAc = new PrimaryDrawerItem().withIdentifier(5).withName(R.string.drawer_item_allLists)
+                .withIcon(GoogleMaterial.Icon.gmd_list);
+
+        PrimaryDrawerItem newListAc = new PrimaryDrawerItem().withIdentifier(6).withName(R.string.drawer_item_newList)
+                .withIcon(GoogleMaterial.Icon.gmd_add_circle);
+
         SecondaryDrawerItem settingsDrawer = new SecondaryDrawerItem().withIdentifier(2).withName(R.string.drawer_item_settings)
                 .withIcon(GoogleMaterial.Icon.gmd_settings);
 
@@ -376,6 +386,23 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });*/
+
+        newListAc.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                addList();
+                return true;
+            }
+        });
+
+        allListsAc.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                Intent i = new Intent(MainActivity.this, ListsActivity.class);
+                startActivity(i);
+                return true;
+            }
+        });
 
         SecondaryDrawerItem contactUsDrawer = new SecondaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_contact)
                 .withIcon(GoogleMaterial.Icon.gmd_mail);
@@ -407,6 +434,8 @@ public class MainActivity extends AppCompatActivity {
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         itemListAc,
+                        newListAc,
+                        allListsAc,
                         new DividerDrawerItem(),
                         settingsDrawer,
                         contactUsDrawer,
@@ -426,12 +455,30 @@ public class MainActivity extends AppCompatActivity {
         navDrawer.setSelection(1);
     }
 
+    private void addList() {
+        dialogManager.showAlertDialogWithEditText("Enter list name", "Create", "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dialog.dismiss();
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        });
+    }
+
     private void closeDrawer() {
         navDrawer.closeDrawer();
     }
 
     private void signOut() {
         mAuth.signOut();
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(intent);
         finish();
     }
 
@@ -494,7 +541,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    //redion Share list
+    //region Share list
     private void ShareList() {
         String sharedList = "";
         String stringList = "";

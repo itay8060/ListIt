@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#5fb0c9"
     android:scrollbarAlwaysDrawVerticalTrack="true"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -24,7 +24,7 @@
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="@dimen/mainactivity_listname_topmargin"
         android:layout_marginStart="@dimen/mainactivity_startmargin"
-        android:textColor="#5fb0c9"
+        android:textColor="#fff"
         android:textSize="@dimen/mainactivity_listname_textsize"
         android:textStyle="bold"/>
 
@@ -58,10 +58,10 @@
         android:completionThreshold="1"
         android:text=""
         android:textAlignment="viewStart"
-        android:textColor="#5fb0c9"
+        android:textColor="#fff"
         android:drawableTint="#006fff"
         android:layout_marginStart="@dimen/mainactivity_edittext_startmargin"
-        android:textColorHint="#5fb0c9"
+        android:textColorHint="#fff"
         android:maxLines="1"
         android:inputType="text"/>
 

@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 /**
@@ -49,6 +51,21 @@ public class UIDialogsManager {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(message).setPositiveButton(positive, dialogClickListener).show();
 
+    }
+
+    public void showAlertDialogWithEditText(String message , String positive , String negative , DialogInterface.OnClickListener dialogClickListener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(message).setPositiveButton(positive, dialogClickListener)
+                .setNegativeButton(negative, dialogClickListener);
+
+        final EditText input = new EditText(context);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        builder.setView(input);
+
+        builder.show();
     }
 
 }

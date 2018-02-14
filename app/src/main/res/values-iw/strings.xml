@@ -11,6 +11,8 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="drawer_item_default_list">הרשימה שלי</string>
+    <string name="drawer_item_allLists">כל הרשימות</string>
+    <string name="drawer_item_newList">רשימה חדשה</string>
     <string name="drawer_item_settings">הגדרות</string>
     <string name="drawer_item_contact">צור קשר</string>
     <string name="drawer_item_signout">התנתקות</string>
@@ -29,7 +31,7 @@
     <!-- Activities strings -->
     <string name="first_list_name">הרשימה הראשונה שלי</string>
     <string name="share_list_msg1">הינה רשימת הקניות שלי : </string>
-    <string name="share_list_msg2">בהצלחה P;</string>
+    <string name="share_list_msg2">קניות מהנות P;</string>
     <string name="pick_share_option">נא לבחור את האפליקציה שתרצה לשתף דרכה</string>
     <string name="mainpage_share">שתף רשימה</string>
     <string name="mainpage_edittext_hint">הזן מוצר</string>
@@ -102,6 +104,7 @@
     <!--Products-->
     <string-array name="meatnfishproducts_names">
         <item>בשר</item>
+        <item>חזה עוף</item>
         <item>דג</item>
     </string-array>
 

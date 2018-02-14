@@ -25,11 +25,11 @@
     <EditText
         android:id="@+id/editnoteactivity_edittext"
         android:layout_width="@dimen/editnoteactivity_edittext_width"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@null"
         android:textColor="#000000"
         android:textSize="@dimen/editnoteactivity_edittext_textsize"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
 

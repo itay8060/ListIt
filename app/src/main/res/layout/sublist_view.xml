@@ -24,7 +24,7 @@
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/sublist_innerlayout_margin"
         android:textSize="@dimen/sublist_textsize"
-        android:textColor="@color/md_red_A700"
+        android:textColor="#0066cc"
         />
 
     </RelativeLayout>

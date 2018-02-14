@@ -91,7 +91,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
                     public void onClick(View v) {
 
                         Flubber.with()
-                                .animation(Flubber.AnimationPreset.POP) // Slide up animation
+                                .animation(Flubber.AnimationPreset.POP) // Animation
                                 .repeatCount(0)                              // Repeat once
                                 .duration(1000)                              // Last for 1000 milliseconds(1 second)
                                 .createFor(v)                             // Apply it to the view
@@ -134,7 +134,6 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
         this.subListsList.add(subList);
         notifyItemInserted(getItemCount());
         notifyItemRangeInserted(getItemCount(), subListsList.size());
-
     }
 
     public void removerItem(int position) {

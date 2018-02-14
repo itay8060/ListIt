@@ -9,6 +9,8 @@
 
     <!-- Navigation Drawer menu labels -->
     <string name="drawer_item_default_list">My List</string>
+    <string name="drawer_item_allLists">All Lists</string>
+    <string name="drawer_item_newList">New list</string>
     <string name="drawer_item_settings">Settings</string>
     <string name="drawer_item_contact">Contact Us</string>
     <string name="drawer_item_signout">Sign out</string>
@@ -27,7 +29,7 @@
     <!-- Activities strings -->
     <string name="first_list_name">My first list</string>
     <string name="share_list_msg1">Here is the grocery list: </string>
-    <string name="share_list_msg2">good luck ;P</string>
+    <string name="share_list_msg2">Have fun ;P</string>
     <string name="pick_share_option">Choose the app to share with</string>
     <string name="mainpage_share">Share List</string>
     <string name="mainpage_edittext_hint">Enter new product</string>
@@ -101,12 +103,13 @@
     <!--Products-->
     <string-array name="meatnfishproducts_names">
         <item>Meat</item>
+        <item>Chicken breast</item>
         <item>Fish</item>
     </string-array>
 
     <string-array name="dairyproducts_names">
         <item>Milk</item>
-        <item>Chease</item>
+        <item>Cheese</item>
     </string-array>
 
     <string-array name="fruitsnvegsproducts_names">

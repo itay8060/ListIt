@@ -128,7 +128,6 @@ public class EditProductActivity extends AppCompatActivity {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                Toast.makeText(EditProductActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
             }
 
             @Override

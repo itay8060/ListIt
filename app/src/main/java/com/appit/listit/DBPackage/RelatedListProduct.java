@@ -21,7 +21,7 @@ public class RelatedListProduct extends SugarRecord {
         this.relatedListOnlineId = listId;
         this.relatedProductOnlineId = productId;
         this.productDone = false;
-        this.quantity=0;
+        this.quantity=1;
     }
 
     public void setRelatedListId(String listId){

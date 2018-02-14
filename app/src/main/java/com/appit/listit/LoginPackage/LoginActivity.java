@@ -63,14 +63,13 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         activityInits();
-        //callbackManager = CallbackManager.Factory.create();
         /*User.deleteAll(User.class);
         List.deleteAll(List.class);
         Product.deleteAll(Product.class);
         RelatedListProduct.deleteAll(RelatedListProduct.class);
         Note.deleteAll(Note.class);
         Log.e("Deleting tables", "Tables deleted");
-        Category.deleteAll(Category.class);*/
+        Category.deleteAll(Category.class); */
     }
 
     @Override
