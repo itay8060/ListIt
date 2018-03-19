@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.appit.listit.DBPackage.ObjectsManager;
@@ -132,6 +134,7 @@ public class ListsActivity extends AppCompatActivity {
                         PrefsManager.setCurrentList(listsList.get(position).getListOnlineId());
                         Intent i = new Intent(ListsActivity.this, MainActivity.class);
                         startActivity(i);
+                        finish();
                         break;
                 }
             }
@@ -200,6 +203,14 @@ public class ListsActivity extends AppCompatActivity {
             }
         });
 
+        newListAc.withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+            @Override
+            public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                addList();
+                return true;
+            }
+        });
+
         SecondaryDrawerItem contactUsDrawer = new SecondaryDrawerItem().withIdentifier(3).withName(R.string.drawer_item_contact)
                 .withIcon(GoogleMaterial.Icon.gmd_mail);
 
@@ -249,6 +260,31 @@ public class ListsActivity extends AppCompatActivity {
                 .build();
 
         navDrawer.setSelection(5);
+    }
+
+    private void addList() {
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+
+        dialogManager.showAlertDialogWithEditText("Enter list name", "Create", "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        ObjectsManager.addNewList(input.getText().toString());
+                        dialog.dismiss();
+                        Intent intent = new Intent(ListsActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        }, input);
     }
 
     private void closeDrawer() {

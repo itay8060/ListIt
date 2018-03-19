@@ -62,10 +62,10 @@ public class RelatedListProduct extends SugarRecord {
     }
 
     public String getProductName(){
-        return ObjectsManager.getProductFromOnlineId(getRelatedProductOnlineId()).getProductName();
+        return ObjectsManager.getProductFromOnlineId(getRelatedProductOnlineId(), relatedListOnlineId).getProductName();
     }
 
-    public String getCategorytId(){
-        return ObjectsManager.getProductFromOnlineId(getRelatedProductOnlineId()).getCategorytId();
+    public String getCategoryId(){
+        return ObjectsManager.getProductFromOnlineId(getRelatedProductOnlineId(), relatedListOnlineId).getCategorytId();
     }
 }

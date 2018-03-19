@@ -93,7 +93,7 @@ public class EditProductActivity extends AppCompatActivity {
     private void firstInitiation() {
         product = ObjectsManager.getRelatedProductFromOnlineId(productId);
         //editactivityPictureImageview.setImageBitmap(product.getProductImage());
-        String categoryName = ObjectsManager.getCategoryNameById(product.getCategorytId());
+        String categoryName = ObjectsManager.getCategoryNameById(product.getCategoryId());
         editactivityCategoryBtn.setText(getResources().getString(R.string.editproduct_category_label) + " " + categoryName);
     }
 

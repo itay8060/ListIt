@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -104,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
     //endregion Variables initiation
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,16 +135,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (pressedTimes == 1){
-            pressedTimes = 0;
-            finish();
-        }
         if (navDrawer.isDrawerOpen()) {
             navDrawer.closeDrawer();
-        }
-        if (pressedTimes == 0){
-            displayToast(getString(R.string.pressagain_toast));
-            pressedTimes = 1;
+        }else{
+            if (pressedTimes == 1) {
+                pressedTimes = 0;
+                finish();
+            }else{
+                if (pressedTimes == 0) {
+                    displayToast(getString(R.string.pressagain_toast));
+                    pressedTimes = 1;
+                }
+            }
         }
     }
 
@@ -175,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
 
     //region Products Funcs
 
-    public void initAutoCompleteSearch(){
+    public void initAutoCompleteSearch() {
 
         newProductEditText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -219,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         //categoriesList = Category.listAll(Category.class);
         //productsList = Product.listAll(Product.class);
         categoriesList = ObjectsManager.getCategoryList();
+        list = ObjectsManager.getUserList();
         productsList = ObjectsManager.getRelatedProductsList(list.getListOnlineId());
         //productsList = FireBaseDataManager.getOnlineProductsList(list.getListOnlineId());
         subListList = SubListArrayMaker.createArray(productsList, categoriesList);
@@ -230,21 +235,20 @@ public class MainActivity extends AppCompatActivity {
             //if edtitext is empty
             displayToast(getString(R.string.enter_product_name_toast));
         } else {
-            if (choseFromSuggestedList){
+            if (choseFromSuggestedList) {
                 //if its chosen from the products DB suggested list - gets the product
                 Product tProduct = ObjectsManager.getProductFromName(chosenProductName);
                 //checks if product allready exists in user's list
-                if (ObjectsManager.getRelatedProduct(list.getListOnlineId(), tProduct.getProductOnlineId())!=0){
+                if (ObjectsManager.getRelatedProduct(list.getListOnlineId(), tProduct.getProductOnlineId()) != 0) {
                     //if yes - adds 1 to the existing product
                     RelatedListProduct trlProduct = RelatedListProduct.findById(RelatedListProduct.class, ObjectsManager.getRelatedProduct(list.getListOnlineId(), tProduct.getProductOnlineId()));
                     trlProduct.increaseQuantity();
                     displayToast(getString(R.string.adding_product_toexisting));
                     newProductEditText.setText("");
                     refreshProducts();
-                }
-                else{
+                } else {
                     //if no - creates the product
-                    RelatedListProduct nrlp = new RelatedListProduct(list.getListOnlineId() ,tProduct.getProductOnlineId());
+                    RelatedListProduct nrlp = new RelatedListProduct(list.getListOnlineId(), tProduct.getProductOnlineId()+list.getListOnlineId());
                     nrlp.save();
                     Log.e("Saved relatedproduct id", nrlp.getRelatedProductOnlineId());
                     choseFromSuggestedList = false;
@@ -252,35 +256,33 @@ public class MainActivity extends AppCompatActivity {
                     refreshProducts();
                 }
 
-            }else{
+            } else {
                 //if not chosen from the products DB list but typed in - checks if the typed in product exists in DB
-                if (ObjectsManager.productExists(newProductEditText.getText().toString())){
+                if (ObjectsManager.productExists(newProductEditText.getText().toString())) {
                     //if yes - gets the product
                     Product tProduct = ObjectsManager.getProductFromName(newProductEditText.getText().toString());
                     //checks if product allready exists in list
-                    if (ObjectsManager.getRelatedProduct(list.getListOnlineId(), tProduct.getProductOnlineId())!=0){
+                    if (ObjectsManager.getRelatedProduct(list.getListOnlineId(), tProduct.getProductOnlineId()) != 0) {
                         //if yes - adds 1 to the existing product
                         RelatedListProduct trlProduct = RelatedListProduct.findById(RelatedListProduct.class, ObjectsManager.getRelatedProduct(list.getListOnlineId(), tProduct.getProductOnlineId()));
                         trlProduct.increaseQuantity();
                         displayToast(getString(R.string.adding_product_toexisting));
                         newProductEditText.setText("");
                         refreshProducts();
-                    }
-                    else{
+                    } else {
                         //if no - creates the product
-                        RelatedListProduct nrlp = new RelatedListProduct(list.getListOnlineId() ,tProduct.getProductOnlineId());
+                        RelatedListProduct nrlp = new RelatedListProduct(list.getListOnlineId(), tProduct.getProductOnlineId() + list.getListOnlineId());
                         nrlp.save();
                         newProductEditText.setText("");
                         refreshProducts();
                     }
-                }
-                else{
+                } else {
                     //if product was not chosen from DB suggested list and does not exist in DB - adds new product to DB for future use
-                    Product product = new Product(newProductEditText.getText().toString(),  ObjectsManager.getCategoryByName(ListItApplication.getContext().getResources().getString(R.string.category_others)).getCategoryOnlineId());
+                    Product product = new Product(newProductEditText.getText().toString(), ObjectsManager.getCategoryByName(ListItApplication.getContext().getResources().getString(R.string.category_others)).getCategoryOnlineId());
                     product.save();
                     FireBaseDataManager.addFireBaseProduct(product, list.getListOnlineId());
                     //adds product to user's list
-                    RelatedListProduct rLProduct = new RelatedListProduct(list.getListOnlineId() ,product.getProductOnlineId());
+                    RelatedListProduct rLProduct = new RelatedListProduct(list.getListOnlineId(), product.getProductOnlineId());
                     rLProduct.save();
                     newProductEditText.setText("");
                     refreshProducts();
@@ -400,6 +402,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                 Intent i = new Intent(MainActivity.this, ListsActivity.class);
                 startActivity(i);
+                finish();
                 return true;
             }
         });
@@ -456,19 +459,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addList() {
+        final EditText input = new EditText(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+
         dialogManager.showAlertDialogWithEditText("Enter list name", "Create", "Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case DialogInterface.BUTTON_POSITIVE:
+                        ObjectsManager.addNewList(input.getText().toString());
                         dialog.dismiss();
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
                         break;
                     case DialogInterface.BUTTON_NEGATIVE:
                         dialog.dismiss();
                         break;
                 }
             }
-        });
+        }, input);
     }
 
     private void closeDrawer() {
@@ -514,7 +526,7 @@ public class MainActivity extends AppCompatActivity {
 
                     public void onClick(DialogInterface arg0, int arg1) {
 
-                //dismiss the dialog and will do nothing
+                        //dismiss the dialog and will do nothing
 
                     }
                 });
@@ -548,10 +560,10 @@ public class MainActivity extends AppCompatActivity {
         String tempList = "";
         productsList = ObjectsManager.getRelatedProductsList(list.getListOnlineId());
         subListList = SubListArrayMaker.createArray(productsList, categoriesList);
-        for (int i = 0; i < subListList.size() ; i++) {
+        for (int i = 0; i < subListList.size(); i++) {
             stringList = stringList + subListList.get(i).getSubListTitle() + ":\n";
             for (int j = 0; j < productsList.size(); j++) {
-                if (productsList.get(j).getCategorytId().equals(subListList.get(i).getCategoryId())){
+                if (productsList.get(j).getCategoryId().equals(subListList.get(i).getCategoryId())) {
                     tempList = tempList + productsList.get(j).getProductName() + " - " + productsList.get(j).getQuantity() + "\n";
                 }
             }
@@ -562,18 +574,18 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name));
-            sharedList = getString(R.string.share_list_msg1)+"\n\n";
+            sharedList = getString(R.string.share_list_msg1) + "\n\n";
             sharedList = sharedList + stringList;
-            sharedList = sharedList + "\n"+getString(R.string.share_list_msg2);
+            sharedList = sharedList + "\n" + getString(R.string.share_list_msg2);
             i.putExtra(Intent.EXTRA_TEXT, sharedList);
             startActivity(Intent.createChooser(i, getString(R.string.pick_share_option)));
-        } catch(Exception e) {
+        } catch (Exception e) {
             //e.toString();
         }
     }
     //endregion Share list
 
-    private void displayToast(String msg){
+    private void displayToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

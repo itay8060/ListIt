@@ -37,7 +37,9 @@ public class ObjectsManager  {
                     return list;
                 } else continue;
             }
-            //return getUserListsList().get(0);
+        }
+        else if (!getUserListsList().isEmpty()){
+            return getUserListsList().get(0);
         }
         else{
             com.appit.listit.Lists.List list = new com.appit.listit.Lists.List(FireBaseDataManager.getUser().getUid(), ListItApplication.getContext().getString(R.string.mainpage_defaultlist));
@@ -51,6 +53,13 @@ public class ObjectsManager  {
             return list;
         }
         return cList;
+    }
+
+    public static void addNewList(String listName){
+        com.appit.listit.Lists.List list = new com.appit.listit.Lists.List(FireBaseDataManager.getUser().getUid(), listName);
+        list.save();
+        FireBaseDataManager.addFireBaseList(list);
+        PrefsManager.setCurrentList(list.getListOnlineId());
     }
 
     public static boolean userHasList(){
@@ -172,9 +181,11 @@ public class ObjectsManager  {
 
     //endregion Category Manager
 
-    public static Product getProductFromOnlineId(String id){
+    public static Product getProductFromOnlineId(String productId , String listId){
         List<Product> productsListTemp = new ArrayList();
-        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", id);
+        String[] split = productId.split(listId);
+        String firstSubString = split[0];
+        productsListTemp = findWithQuery(Product.class, "Select * from Product where product_online_id = ?", firstSubString);
         return productsListTemp.get(0);
     }
 

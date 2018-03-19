@@ -26,7 +26,7 @@ public class SubListArrayMaker {
             Category c = categoriesList.get(i);
             List<RelatedListProduct> tempProductsList = new ArrayList<>();
             for (int j = 0; j < productsList.size(); j++) {
-                     if (productsList.get(j).getCategorytId().equals(c.getCategoryOnlineId())) {
+                     if (productsList.get(j).getCategoryId().equals(c.getCategoryOnlineId())) {
                      tempProductsList.add(productsList.get(j));
                  }
             }

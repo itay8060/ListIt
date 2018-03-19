@@ -56,7 +56,7 @@ public class SubListAdapter extends RecyclerView.Adapter<SubListAdapter.SubListH
 
         for (int i = 0; i < productsList.size(); i++)
         {
-            if (productsList.get(i).getCategorytId().equals(String.valueOf(subListsList.get(position).getCategoryId()))) {
+            if (productsList.get(i).getCategoryId().equals(String.valueOf(subListsList.get(position).getCategoryId()))) {
                 final int k = i;
 
                 View line = list.inflate(context, R.layout.product_view, null);
